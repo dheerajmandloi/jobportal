@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — JobSphere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==================================================================
+       JobSphere — Glassmorphic Dashboard Stylesheet
+       Theme: Midnight Navy with Electric Cyber Accents
+    ================================================================== */
+
+        :root {
+            --navy-bg: #070b14;
+            --navy-sidebar: rgba(10, 15, 30, 0.75);
+            --navy-card: rgba(255, 255, 255, 0.03);
+            --navy-border: rgba(255, 255, 255, 0.08);
+            --indigo: #4f46e5;
+            --indigo-glow: rgba(79, 70, 229, 0.3);
+            --cyan: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.2);
+            --pink: #ec4899;
+            --green: #10b981;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #475569;
+            --sidebar-width: 280px;
+        }
+
+        /* ─── BASE RESET & RESET ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--navy-bg);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ─── SIDEBAR STYLING ─── */
+        #sidebar {
+            width: var(--sidebar-width);
+            background: var(--navy-sidebar);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid var(--navy-border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 25px 20px;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 35px;
+        }
+
+        .sidebar-brand h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-brand span {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--cyan);
+            font-weight: 700;
+        }
+
+        /* Sidebar User Profile */
+        .sidebar-user {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--navy-border);
+            border-radius: 16px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        #userAvatar {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--indigo) 0%, #7c3aed 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            box-shadow: 0 0 15px var(--indigo-glow);
+        }
+
+        .user-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .user-info p {
+            font-size: 0.72rem;
+            color: var(--cyan);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        /* Sidebar Navigation Links */
+        nav h3 {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin: 20px 0 10px 10px;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 4px;
+        }
+
+        .nav-link i {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(79, 70, 229, 0.15) 0%, transparent 100%);
+            border-left: 3px solid var(--indigo);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .nav-link.logout-btn {
+            color: #ef4444;
+        }
+
+        .nav-link.logout-btn:hover {
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        /* ─── MAIN CONTENT LAYOUT ─── */
+        #mainContent {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 40px;
+            max-width: 1400px;
+        }
+
+        /* Header Panel */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        #welcomeGreeting {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        #currentDateDisplay {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--navy-card);
+            border: 1px solid var(--navy-border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ─── STATISTICAL CARDS GRID ─── */
+        #statsContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card-box {
+            background: var(--navy-card);
+            border: 1px solid var(--navy-border);
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .stat-card-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+
+        .stat-card-box .icon-wrapper {
+            width: 42px;
+            height: 42px;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--cyan);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+        }
+
+        .stat-card-box h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .stat-card-box p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ─── QUICK ACTIONS GRID ─── */
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        #actionsContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .action-link-item {
+            background: var(--navy-card);
+            border: 1px solid var(--navy-border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.88rem;
+            transition: all 0.25s;
+        }
+
+        .action-link-item i {
+            font-size: 1.3rem;
+            color: var(--indigo);
+            transition: transform 0.3s;
+        }
+
+        .action-link-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .action-link-item:hover i {
+            transform: scale(1.1);
+        }
+
+        /* ─── MAIN DASHBOARD SPLIT GRID ─── */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--navy-card);
+            border: 1px solid var(--navy-border);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--navy-border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 i {
+            color: var(--indigo);
+        }
+
+        /* Recent Activity Layout */
+        .activity-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .activity-row:last-child {
+            border-bottom: none;
+        }
+
+        .activity-row i {
+            color: var(--cyan);
+            font-size: 0.75rem;
+            margin-top: 5px;
+        }
+
+        .activity-row p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Connection Status Box */
+        .status-box {
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-indicator-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--green);
+            flex-shrink: 0;
+        }
+
+        .status-box p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        /* ─── RESPONSIVE LAYOUTS (MOBILE & TABLET) ─── */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                transform: translateX(-100%);
+                /* Agar drawer panel banana ho to handle karein */
+            }
+
+            #mainContent {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside id="sidebar">
+        <div class="sidebar-brand">
+            <h2>💼 JobSphere</h2>
+            <span>User Hub</span>
+        </div>
+
+        <div class="sidebar-user">
+            <div id="userAvatar">-</div>
+            <div class="user-info">
+                <h4 id="userNameDisplay">Loading...</h4>
+                <p id="userRoleDisplay">Verifying...</p>
+            </div>
+        </div>
+
+        <nav>
+            <div id="seekerMenu" style="display:none;">
+                <h3>Job Hunting</h3>
+                <a href="#" class="nav-link active"><i class="fa fa-chart-pie"></i> Dashboard</a>
+                <a href="UserJob.html" class="nav-link"><i class="fa fa-briefcase"></i> Browse Jobs</a>
+                <a href="applications.html" class="nav-link"><i class="fa fa-paper-plane"></i> My Applications</a>
+                <a href="UserProfile.html" class="nav-link"><i class="fa fa-user"></i> My Profile</a>
+            </div>
+
+            <div id="employerMenu" style="display:none;">
+                <h3>Recruitment</h3>
+                <a href="#" class="nav-link active"><i class="fa fa-chart-pie"></i> Dashboard</a>
+                <a href="create-job.html" class="nav-link"><i class="fa fa-plus-circle"></i> Post a Job</a>
+                <a href="manage-jobs.html" class="nav-link"><i class="fa fa-tasks"></i> Manage Listings</a>
+            </div>
+
+            <div class="account-menu">
+                <h3>Account</h3>
+                <a href="#" onclick="logoutUser(); return false;" class="nav-link logout-btn">
+                    <i class="fa fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <main id="mainContent">
+        <header>
+            <div class="header-left">
+                <h1 id="welcomeGreeting">Welcome Back!</h1>
+                <p id="currentDateDisplay"></p>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn"><i class="fa fa-bell"></i></button>
+                <button class="icon-btn"><i class="fa fa-envelope"></i></button>
+            </div>
+        </header>
+
+        <section id="statsContainer">
+        </section>
+
+        <section>
+            <h3>Quick Actions</h3>
+            <div id="actionsContainer">
+            </div>
+        </section>
+
+        <section class="dashboard-grid">
+            <div class="card">
+                <h3><i class="fa fa-history"></i> Recent Activity</h3>
+                <div id="activityLog">
+                    <p>Loading your recent ecosystem updates...</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa fa-shield-alt"></i> Security & Connection</h3>
+                <div class="status-box">
+                    <span class="status-indicator-dot"></span>
+                    <p>Connected to Spring Boot API via active Local Storage Token.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // UserLogin.html ke standard keys ke sath matching constants
+        const STORAGE_TOKEN_KEY = "token";
+        const STORAGE_USER_KEY = "user";
+
+        // Alag-alag roles ke liye custom dashboard content structure
+        const DASHBOARD_TEMPLATES = {
+            JOB_SEEKER: {
+                roleTitle: "Job Seeker",
+                stats: [
+                    { value: "12", label: "Applied Jobs", icon: "fa-paper-plane" },
+                    { value: "4", label: "Interviews Scheduled", icon: "fa-calendar-check" },
+                    { value: "85%", label: "Profile Match Score", icon: "fa-id-badge" },
+                    { value: "320", label: "New Job Matches", icon: "fa-bolt" }
+                ],
+                actions: [
+                    { text: "Browse Openings", url: "UserJob.html", icon: "fa-search" },
+                    { text: "Track Applications", url: "applications.html", icon: "fa-file-medical" },
+                    { text: "Update Resume", url: "profile.html", icon: "fa-user-edit" }
+                ],
+                activities: [
+                    "You applied for 'Senior Java Developer' at TechCorp.",
+                    "Your application for 'Frontend Engineer' was reviewed.",
+                    "New interview invitation received from Innovate LLC."
+                ]
+            },
+            EMPLOYER: {
+                roleTitle: "Employer / Recruiter",
+                stats: [
+                    { value: "6", label: "Active Job Posts", icon: "fa-folder-open" },
+                    { value: "48", label: "Total Applications", icon: "fa-users" },
+                    { value: "2", label: "Urgent Positions", icon: "fa-exclamation-circle" }
+                ],
+                actions: [
+                    { text: "Post a New Job", url: "create-job.html", icon: "fa-plus-circle" },
+                    { text: "Review Applicants", url: "manage-jobs.html", icon: "fa-user-check" }
+                ],
+                activities: [
+                    "Job posting 'Backend Developer' received 5 new applicants.",
+                    "You scheduled an interview with Amit Sharma for Monday."
+                ]
+            }
+        };
+
+        // Page Load Engine Initialization
+        document.addEventListener("DOMContentLoaded", () => {
+            // LocalStorage se data read karna
+            const token = localStorage.getItem(STORAGE_TOKEN_KEY);
+            const userRaw = localStorage.getItem(STORAGE_USER_KEY);
+
+            // Auth Check Interceptor: Agar data nahi hai to login pe wapas bhejo
+            if (!token || !userRaw) {
+                console.warn("Unauthorized access. Redirecting to login window.");
+                window.location.href = "UserLogin.html";
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userRaw);
+                renderDashboard(user);
+            } catch (error) {
+                console.error("Error parsing user context:", error);
+                logoutUser();
+            }
+        });
+
+        // Dashboard UI Content Rendering Engine
+        function renderDashboard(user) {
+            // Normalizing standard role format
+            let currentRole = user.role ? user.role.toUpperCase() : "JOB_SEEKER";
+            if (currentRole === "SEEKER") currentRole = "JOB_SEEKER";
+
+            const template = DASHBOARD_TEMPLATES[currentRole] || DASHBOARD_TEMPLATES["JOB_SEEKER"];
+
+            // Username nikalna email ya name field se
+            const displayName = user.name || (user.email ? user.email.split('@')[0] : "User");
+            const userInitials = displayName.substring(0, 2).toUpperCase();
+
+            // Profile view nodes populate karna
+            document.getElementById("userAvatar").textContent = userInitials;
+            document.getElementById("userNameDisplay").textContent = displayName;
+            document.getElementById("userRoleDisplay").textContent = template.roleTitle;
+            document.getElementById("welcomeGreeting").textContent = `Welcome Back, ${displayName}!`;
+
+            // Current Date update karna
+            document.getElementById("currentDateDisplay").textContent = new Date().toLocaleDateString('en-US', {
+                weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'
+            });
+
+            // Role-specific navigation display validation
+            if (currentRole === "EMPLOYER") {
+                document.getElementById("employerMenu").style.display = "block";
+            } else {
+                document.getElementById("seekerMenu").style.display = "block";
+            }
+
+            // Stats Grid Render karna
+            const statsGrid = document.getElementById("statsContainer");
+            statsGrid.innerHTML = template.stats.map(stat => `
+                <div class="stat-card-box">
+                    <div class="icon-wrapper"><i class="fa ${stat.icon}"></i></div>
+                    <h2>${stat.value}</h2>
+                    <p>${stat.label}</p>
+                </div>
+            `).join('');
+
+            // Actions Grid Render karna
+            const actionsGrid = document.getElementById("actionsContainer");
+            actionsGrid.innerHTML = template.actions.map(action => `
+                <a href="${action.url}" class="action-link-item">
+                    <i class="fa ${action.icon}"></i>
+                    <span>${action.text}</span>
+                </a>
+            `).join('');
+
+            // Activities Log update karna
+            const activityLog = document.getElementById("activityLog");
+            activityLog.innerHTML = template.activities.map(act => `
+                <div class="activity-row">
+                    <i class="fa fa-circle-notch"></i>
+                    <p>${act}</p>
+                </div>
+            `).join('');
+        }
+
+        // Logout Operations Handler
+        function logoutUser() {
+            localStorage.removeItem(STORAGE_TOKEN_KEY);
+            localStorage.removeItem(STORAGE_USER_KEY);
+            alert("Securely logging out from JobSphere system.");
+            window.location.href = "UserLogin.html";
+        }
+    </script>
+</body>
+
+</html>

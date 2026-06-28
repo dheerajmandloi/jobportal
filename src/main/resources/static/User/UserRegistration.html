@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Register - Job Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+
+        nav .brand {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #4facfe;
+            text-decoration: none;
+        }
+
+        nav .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        nav .nav-links a:hover {
+            color: #fff;
+        }
+
+        /* --- Registration Card --- */
+        .reg-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeInScale 0.6s ease-out;
+            margin-top: 80px;
+            /* Space for navbar */
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #5ee7df;
+            letter-spacing: 1px;
+        }
+
+        /* --- Form Grid --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            /* Single column layout for modern registration flow */
+            gap: 18px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px 12px 42px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        input:focus {
+            border-color: #5ee7df;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 12px rgba(94, 231, 223, 0.2);
+        }
+
+        /* --- Button --- */
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px -5px rgba(180, 144, 202, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 12px 25px -5px rgba(180, 144, 202, 0.6);
+        }
+
+        /* --- Footer text --- */
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .footer-text a {
+            color: #5ee7df;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* --- Responsive Layout --- */
+        @media (max-width: 500px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .reg-card {
+                padding: 25px 20px;
+                margin-top: 90px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="../index.html" class="brand">Job Portal</a>
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="Userlogin.html">Login</a>
+        </div>
+    </nav>
+
+    <div class="reg-card">
+        <h2>User Registration</h2>
+
+        <form id="registerForm">
+            <div class="form-grid">
+                <div class="input-group full-width">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="fullName" placeholder="Full Name" required>
+                </div>
+
+                <div class="input-group full-width">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email Address" required>
+                </div>
+
+                <div class="input-group full-width">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" id="phoneNumber" placeholder="Phone Number" required>
+                </div>
+
+
+
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-check-circle"></i>
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                </div>
+            </div>
+
+            <button type="submit" id="regBtn">Create Account</button>
+        </form>
+
+        <p class="footer-text">
+            Already have an account? <a href="Userlogin.html">Login here</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = document.getElementById('regBtn');
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Password matching validation
+            if (password !== confirmPassword) {
+                alert("Passwords do not match ❌");
+                return;
+            }
+
+            // Loading State
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Registering...';
+            btn.style.pointerEvents = 'none';
+
+            // Form data mapped according to your MySQL DB columns / UserDto fields
+            const data = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                password: password
+            };
+
+            try {
+                // Calling your updated AuthController register endpoint
+                const res = await fetch('http://localhost:8080/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (!res.ok) {
+                    const errText = await res.text();
+                    throw new Error(errText || "Registration failed.");
+                }
+
+                alert("Registration Successful ✅");
+                window.location.href = "Userlogin.html";
+
+            } catch (err) {
+                alert("Error: " + err.message);
+                btn.innerHTML = 'Create Account';
+                btn.style.pointerEvents = 'all';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

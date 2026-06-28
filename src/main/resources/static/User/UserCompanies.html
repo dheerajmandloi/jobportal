@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Companies – JobSphere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==================================================================
+       JobSphere — Premium Dark Neon Companies Grid Stylesheet
+       Theme: Midnight Navy with Electric Cyan & Indigo Accents
+    ================================================================== */
+
+        :root {
+            --bg-navy: #0A0F1E;
+            --sidebar-bg: rgba(10, 15, 30, 0.9);
+            --card-bg: #111827;
+            --border-color: #1E2A42;
+            --indigo-main: #4F46E5;
+            --indigo-light: #6366F1;
+            --cyan-main: #06B6D4;
+            --cyan-light: #22D3EE;
+            --pink-alert: #EC4899;
+            --green-success: #10B981;
+            --text-main: #F1F5F9;
+            --text-sub: #94A3B8;
+            --text-muted: #64748B;
+            --sidebar-width: 260px;
+        }
+
+        /* ─── BASE RESET ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-navy);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            line-height: 1.5;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(79, 70, 229, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 110%, rgba(6, 182, 212, 0.08) 0%, transparent 55%);
+            background-attachment: fixed;
+        }
+
+        /* ─── SIDEBAR STYLING (Identical across ecosystem) ─── */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .sidebar-brand {
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-brand h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-brand span {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--cyan-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        #userAvatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--indigo-main), var(--cyan-main));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+            box-shadow: 0 0 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .user-info h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-info p {
+            font-size: 0.7rem;
+            color: var(--cyan-light);
+            font-weight: 500;
+        }
+
+        #sidebar nav h3 {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin: 20px 0 10px 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.25s ease;
+            margin-bottom: 4px;
+        }
+
+        .nav-link i {
+            width: 16px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+
+        .nav-link.active {
+            background: rgba(79, 70, 229, 0.15);
+            color: var(--indigo-light);
+            font-weight: 600;
+            border-left: 3px solid var(--indigo-main);
+        }
+
+        .logout-btn {
+            color: #f87171;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+        }
+
+        /* ─── MAIN CONTENT AREA ─── */
+        #mainContent {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 40px;
+            max-width: 1400px;
+        }
+
+        /* Header Layout */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        #totalCompaniesCounter {
+            font-size: 0.88rem;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        /* Search Utility Bar Styling */
+        .search-box-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .search-box-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        #companySearchInput {
+            width: 100%;
+            padding: 12px 16px 12px 48px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #companySearchInput:focus {
+            border-color: var(--indigo-light);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.2);
+        }
+
+        #companySearchInput::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* API Status Boxes */
+        .status-box-error {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 0.88rem;
+        }
+
+        /* ─── COMPANIES GRID & CARD STYLING ─── */
+        #companiesGridContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .company-card-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 230px;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease;
+        }
+
+        .company-card-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(6, 182, 212, 0.35);
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Card Top Header Header Details */
+        .company-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .company-meta-main h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .company-meta-main h3 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-sub);
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .company-meta-main h3 i {
+            color: var(--indigo-light);
+            font-size: 0.8rem;
+        }
+
+        /* Meta Location Badge */
+        .company-badge {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--cyan-light);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            border: 1px solid rgba(6, 182, 212, 0.15);
+        }
+
+        .company-badge i {
+            font-size: 0.75rem;
+        }
+
+        /* Corporate Profile Description */
+        .company-description-summary {
+            font-size: 0.86rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 22px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Action View Button Profile */
+        .action-view-btn {
+            width: 100%;
+            padding: 11px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .action-view-btn:hover {
+            background: rgba(6, 182, 212, 0.08);
+            border-color: var(--cyan-main);
+            color: var(--cyan-light);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
+        }
+
+        /* Loading, Empty and Error Structural States */
+        .loading-state,
+        .empty-state-box,
+        .error-state-box {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--card-bg);
+            border: 1px dashed var(--border-color);
+            border-radius: 18px;
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        .loading-state i {
+            font-size: 1.5rem;
+            color: var(--cyan-light);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .error-state-box i {
+            font-size: 2rem;
+            color: #ef4444;
+            margin-bottom: 12px;
+        }
+
+        /* ─── RESPONSIVE MEDIA QUERIES ─── */
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 70px;
+                padding: 15px 10px;
+            }
+
+            .sidebar-brand h2,
+            .sidebar-brand span,
+            .user-info,
+            #sidebar nav h3,
+            .nav-link span {
+                display: none;
+            }
+
+            .sidebar-user {
+                padding: 5px;
+                justify-content: center;
+            }
+
+            .nav-link {
+                justify-content: center;
+                padding: 12px;
+            }
+
+            #mainContent {
+                margin-left: 70px;
+                padding: 20px;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box-wrapper {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside id="sidebar">
+        <div class="sidebar-brand">
+            <h2>💼 JobSphere</h2>
+            <span>User Hub</span>
+        </div>
+
+        <div class="sidebar-user">
+            <div id="userAvatar">-</div>
+            <div class="user-info">
+                <h4 id="userNameDisplay">Loading...</h4>
+                <p id="userRoleDisplay">Verifying...</p>
+            </div>
+        </div>
+
+        <nav>
+            <div id="seekerMenu" style="display:none;">
+                <h3>Job Hunting</h3>
+                <a href="UserHome.html" class="nav-link"><i class="fa fa-chart-pie"></i> Dashboard</a>
+                <a href="UserJob.html" class="nav-link"><i class="fa fa-briefcase"></i> Browse Jobs</a>
+                <a href="#" class="nav-link active"><i class="fa fa-building"></i> Companies</a>
+                <a href="applications.html" class="nav-link"><i class="fa fa-paper-plane"></i> My Applications</a>
+                <a href="UserProfile.html" class="nav-link"><i class="fa fa-user"></i> My Profile</a>
+            </div>
+
+            <div id="employerMenu" style="display:none;">
+                <h3>Recruitment</h3>
+                <a href="UserHome.html" class="nav-link"><i class="fa fa-chart-pie"></i> Dashboard</a>
+                <a href="create-job.html" class="nav-link"><i class="fa fa-plus-circle"></i> Post a Job</a>
+                <a href="manage-jobs.html" class="nav-link"><i class="fa fa-tasks"></i> Manage Listings</a>
+            </div>
+
+            <div class="account-menu">
+                <h3>Account</h3>
+                <a href="#" onclick="logoutUser(); return false;" class="nav-link logout-btn">
+                    <i class="fa fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <main id="mainContent">
+        <header>
+            <div class="header-left">
+                <h1>Partner Companies</h1>
+                <p id="totalCompaniesCounter">Loading corporate ecosystem profiles...</p>
+            </div>
+
+            <div class="search-box-wrapper">
+                <i class="fa fa-search"></i>
+                <input type="text" id="companySearchInput"
+                    placeholder="Search by Name, Sector, Location, or Description...">
+            </div>
+        </header>
+
+        <div id="apiStatusMessage" style="display: none;"></div>
+
+        <section id="companiesGridContainer">
+            <div class="loading-state">
+                <i class="fa fa-spinner fa-spin"></i> Fetching active corporate profiles from Spring Boot secure
+                server...
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // System Auth Storage Keys
+        const STORAGE_TOKEN_KEY = "token";
+        const STORAGE_USER_KEY = "user";
+
+        let allCompaniesArray = [];
+
+        // Page Load aur Authorization Check Interceptor
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem(STORAGE_TOKEN_KEY);
+            const userRaw = localStorage.getItem(STORAGE_USER_KEY);
+
+            if (!token || !userRaw) {
+                console.warn("Unauthorized access. Redirecting to login window.");
+                window.location.href = "UserLogin.html";
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userRaw);
+                setupSidebarProfile(user);
+
+                // Real Live API se companies data fetch karna
+                fetchLiveBackendCompanies(token);
+            } catch (error) {
+                console.error("Session integrity check failed:", error);
+                logoutUser();
+            }
+
+            // Search event listener setup
+            document.getElementById("companySearchInput").addEventListener("input", handleSearchFilter);
+        });
+
+        // Sidebar profile mapping
+        function setupSidebarProfile(user) {
+            let currentRole = user.role ? user.role.toUpperCase() : "JOB_SEEKER";
+            if (currentRole === "SEEKER") currentRole = "JOB_SEEKER";
+
+            const displayName = user.name || (user.email ? user.email.split('@')[0] : "User");
+            document.getElementById("userAvatar").textContent = displayName.substring(0, 2).toUpperCase();
+            document.getElementById("userNameDisplay").textContent = displayName;
+            document.getElementById("userRoleDisplay").textContent = currentRole === "JOB_SEEKER" ? "Job Seeker" : "Employer";
+
+            if (currentRole === "EMPLOYER") {
+                document.getElementById("employerMenu").style.display = "block";
+            } else {
+                document.getElementById("seekerMenu").style.display = "block";
+            }
+        }
+
+        // Secure Spring Boot API Async Fetch Core Call
+        async function fetchLiveBackendCompanies(token) {
+            const gridContainer = document.getElementById("companiesGridContainer");
+            const counterLabel = document.getElementById("totalCompaniesCounter");
+
+            try {
+                // Aapke Spring Boot controller endpoint ke according path check karein
+                const response = await fetch("http://localhost:8080/api/company", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        throw new Error("Your login session has expired. Please re-authenticate.");
+                    }
+                    throw new Error(`Server responded with unexpected error code: ${response.status}`);
+                }
+
+                allCompaniesArray = await response.json();
+                counterLabel.textContent = `Explore ${allCompaniesArray.length} registered top industry partners.`;
+
+                renderCompanyCards(allCompaniesArray);
+
+            } catch (error) {
+                console.error("API Processing Error:", error);
+
+                let errorMsg = error.message;
+                if (errorMsg.includes("Failed to fetch")) {
+                    errorMsg = "Unable to reach Spring Boot endpoints. Please verify if your backend service is online at localhost:8080.";
+                }
+
+                showStatusBox(errorMsg, "error");
+                gridContainer.innerHTML = `<div class="error-state-box"><i class="fa fa-exclamation-triangle"></i> <p>${errorMsg}</p></div>`;
+            }
+        }
+
+        // Company Cards Render Engine (Database Column Mapping Backups Fixed)
+        function renderCompanyCards(companiesList) {
+
+            const container = document.getElementById("companiesGridContainer");
+
+            if (!companiesList || companiesList.length === 0) {
+                container.innerHTML = `
+            <div class="empty-state-box">
+                <p>No company profiles found matching your current filters.</p>
+            </div>
+        `;
+                return;
+            }
+
+            container.innerHTML = companiesList.map(comp => {
+
+                const companyId =
+                    comp.companyId ||
+                    comp.company_id ||
+                    comp.id;
+
+                const name =
+                    comp.companyName ||
+                    comp.company_name ||
+                    comp.name ||
+                    "Anonymous Organization";
+
+                const sector =
+                    comp.industry ||
+                    comp.sector ||
+                    "Technology Sector";
+
+                const location =
+                    comp.location ||
+                    "Global Workspace";
+
+                const description =
+                    comp.description ||
+                    "No corporate profile descriptions uploaded yet.";
+
+                const website =
+                    comp.website ||
+                    "#";
+
+                return `
+            <div class="company-card-item">
+
+                <div class="company-card-header">
+
+                    <div class="company-meta-main">
+                        <h2>${name}</h2>
+                        <h3>
+                            <i class="fa fa-layer-group"></i>
+                            ${sector}
+                        </h3>
+                    </div>
+
+                    <span class="company-badge">
+                        <i class="fa fa-map-marker-alt"></i>
+                        ${location}
+                    </span>
+
+                </div>
+
+                <p class="company-description-summary">
+                    ${description}
+                </p>
+
+                <div class="company-card-footer">
+
+                    <button
+                        class="action-view-btn"
+                        onclick="openProfileTrack(${companyId}, '${name.replace(/'/g, "\\'")}')">
+
+                        <i class="fa fa-eye"></i>
+                        View Profile
+
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+            }).join("");
+
+        }
+        // Dynamic Client Filtering Context
+        function handleSearchFilter(e) {
+            const searchKeyword = e.target.value.toLowerCase().trim();
+
+            if (!searchKeyword) {
+                renderCompanyCards(allCompaniesArray);
+                return;
+            }
+
+            const filtered = allCompaniesArray.filter(comp => {
+                const nameText = (comp.company_name || comp.name || "").toLowerCase();
+                const sectorText = (comp.sector || comp.industry || "").toLowerCase();
+                const locText = (comp.location || "").toLowerCase();
+                const descText = (comp.description || "").toLowerCase();
+
+                return nameText.includes(searchKeyword) ||
+                    sectorText.includes(searchKeyword) ||
+                    locText.includes(searchKeyword) ||
+                    descText.includes(searchKeyword);
+            });
+
+            renderCompanyCards(filtered);
+        }
+
+        // Action Trigger Trace Profile Handler
+        function openProfileTrack(companyId, companyName) {
+            alert(`ℹ️ Loading comprehensive system files for Company ID ${companyId}: [${companyName}]!`);
+        }
+
+        // Helper Status Toast/Box
+        function showStatusBox(message, mode) {
+            const box = document.getElementById("apiStatusMessage");
+            box.style.display = "block";
+            box.className = `status-box-${mode}`;
+            box.textContent = message;
+        }
+
+        // Logout User Configuration
+        function logoutUser() {
+            localStorage.removeItem(STORAGE_TOKEN_KEY);
+            localStorage.removeItem(STORAGE_USER_KEY);
+            alert("Securely logging out from JobSphere system.");
+            window.location.href = "UserLogin.html";
+        }
+    </script>
+</body>
+
+</html>
