@@ -3,6 +3,7 @@ package com.example.jobportal.Controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +28,12 @@ public class ApplicationController {
 
     // Apply for Job
     @PostMapping("/apply")
-    public ResponseEntity<String> applyJob(@RequestBody ApplicationDto applicationDto) {
+    public ResponseEntity<String> applyJob(
+            @RequestBody ApplicationDto dto,
+            Authentication authentication) {
 
-        return ResponseEntity.ok(applicationService.applyJob(applicationDto));
+        return ResponseEntity.ok(
+                applicationService.applyJob(dto, authentication.getName()));
     }
 
     // Get All Applications

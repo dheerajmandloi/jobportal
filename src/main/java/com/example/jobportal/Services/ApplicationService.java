@@ -29,9 +29,9 @@ public class ApplicationService {
     }
 
     // Apply for Job
-    public String applyJob(ApplicationDto dto) {
+    public String applyJob(ApplicationDto dto, String email) {
 
-        User user = userRepository.findById(dto.getUserId())
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Job job = jobRepository.findById(dto.getJobId())
@@ -41,7 +41,7 @@ public class ApplicationService {
 
         application.setUser(user);
         application.setJob(job);
-        application.setStatus("Applied");
+        application.setStatus("APPLIED");
 
         applicationRepository.save(application);
 

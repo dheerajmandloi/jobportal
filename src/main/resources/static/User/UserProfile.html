@@ -232,6 +232,10 @@
             box-shadow: 0 8px 25px rgba(6, 182, 212, 0.25);
         }
 
+        .header-details-meta {
+            flex-grow: 1;
+        }
+
         .header-details-meta h1 {
             font-size: 1.6rem;
             font-weight: 700;
@@ -251,6 +255,43 @@
             text-transform: uppercase;
             padding: 4px 14px;
             border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        /* Profile Progress Tracker styling */
+        .completion-wrapper {
+            margin-top: 12px;
+            max-width: 280px;
+        }
+
+        .completion-text {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .completion-text span {
+            color: var(--cyan-light);
+        }
+
+        .completion-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .completion-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--indigo-main), var(--cyan-main));
+            box-shadow: 0 0 8px var(--cyan-light);
+            transition: width 0.5s ease;
         }
 
         /* Dynamic Profile Actions Trigger */
@@ -284,6 +325,22 @@
             padding: 40px;
         }
 
+        .section-header {
+            grid-column: span 2;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--cyan-light);
+            border-bottom: 1px solid rgba(30, 42, 66, 0.7);
+            padding-bottom: 6px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .form-grid-sections {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -294,6 +351,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            transition: all 0.3s ease;
         }
 
         .form-group label {
@@ -365,7 +423,22 @@
             width: 100%;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: none;
-            /* Controlled via State Class Engine */
+        }
+
+        select.editor-input-field {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        select.editor-input-field option {
+            background-color: #111827;
+            color: var(--text-main);
         }
 
         .editor-input-field:focus {
@@ -574,7 +647,7 @@
                 <a href="UserHome.html" class="nav-link"><i class="fa fa-chart-pie"></i> Dashboard</a>
                 <a href="UserJob.html" class="nav-link"><i class="fa fa-briefcase"></i> Browse Jobs</a>
                 <a href="UserCompanies.html" class="nav-link"><i class="fa fa-building"></i> Companies</a>
-                <a href="applications.html" class="nav-link"><i class="fa fa-paper-plane"></i> My Applications</a>
+                <a href="UserApplication.html" class="nav-link"><i class="fa fa-paper-plane"></i> My Applications</a>
                 <a href="#" class="nav-link active"><i class="fa fa-user"></i> My Profile</a>
             </div>
 
@@ -599,11 +672,21 @@
 
             <div class="profile-header">
                 <div class="header-cover-badge">
-                    <div id="largeProfileInitials">JM</div>
+                    <div id="largeProfileInitials">-</div>
                 </div>
                 <div class="header-details-meta">
                     <h1 id="view_fullName">Profile Name</h1>
-                    <p id="view_badgeRole">JOB_SEEKER</p>
+                    <div>
+                        <p id="view_badgeRole">JOB_SEEKER</p>
+                    </div>
+                    <div class="completion-wrapper">
+                        <div class="completion-text">
+                            Profile Completion: <span id="completionValue">0%</span>
+                        </div>
+                        <div class="completion-bar-bg">
+                            <div id="completionBarFill" class="completion-bar-fill"></div>
+                        </div>
+                    </div>
                 </div>
                 <button type="button" id="editToggleBtn" class="action-edit-toggle" onclick="toggleEditMode()">
                     <i class="fa fa-edit"></i> Edit Profile
@@ -613,6 +696,8 @@
             <form id="profileForm" onsubmit="handleProfileUpdateSubmit(event)">
                 <div class="form-grid-sections">
 
+                    <div class="section-header"><i class="fa fa-user"></i> Personal Details</div>
+
                     <div class="form-group">
                         <label><i class="fa fa-user-circle"></i> Full Name</label>
                         <div class="value-display-mode" id="lbl_fullName">Loading Name...</div>
@@ -621,23 +706,143 @@
 
                     <div class="form-group">
                         <label><i class="fa fa-envelope"></i> Email Address</label>
-                        <div class="value-display-mode" id="lbl_email">Loading Email...</div>
+                        <div class="value-display-mode readonly" id="lbl_email">Loading Email...</div>
                         <input type="email" id="i_email" class="editor-input-field" readonly disabled>
                     </div>
 
                     <div class="form-group">
                         <label><i class="fa fa-phone"></i> Phone Number</label>
-                        <div class="value-display-mode" id="lbl_phone">Not Assigned</div>
-                        <input type="text" id="i_phone" class="editor-input-field">
+                        <div class="value-display-mode" id="lbl_phoneNumber">Not Assigned</div>
+                        <input type="text" id="i_phoneNumber" class="editor-input-field">
                     </div>
 
                     <div class="form-group">
-                        <label><i class="fa fa-file-pdf"></i> Resume Document URL</label>
-                        <div class="value-display-mode" id="lbl_resume">
-                            <span class="muted-text">No document linked</span>
+                        <label><i class="fa fa-map-marker-alt"></i> Current City</label>
+                        <div class="value-display-mode" id="lbl_currentCity">Not Provided</div>
+                        <input type="text" id="i_currentCity" class="editor-input-field">
+                    </div>
+
+                    <div class="section-header"><i class="fa fa-globe"></i> Professional Ecosystem Links</div>
+
+                    <div class="form-group">
+                        <label><i class="fab fa-github"></i> GitHub URL</label>
+                        <div class="value-display-mode" id="lbl_githubUrl">Not Provisioned</div>
+                        <input type="url" id="i_githubUrl" class="editor-input-field"
+                            placeholder="https://github.com/username">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fab fa-linkedin"></i> LinkedIn URL</label>
+                        <div class="value-display-mode" id="lbl_linkedinUrl">Not Provisioned</div>
+                        <input type="url" id="i_linkedinUrl" class="editor-input-field"
+                            placeholder="https://linkedin.com/in/username">
+                    </div>
+
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label><i class="fa fa-laptop-code"></i> Portfolio URL</label>
+                        <div class="value-display-mode" id="lbl_portfolioUrl">Not Provisioned</div>
+                        <input type="url" id="i_portfolioUrl" class="editor-input-field"
+                            placeholder="https://portfolio.dev">
+                    </div>
+
+                    <div class="section-header"><i class="fa fa-tools"></i> Technical Core Skillsets</div>
+
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label><i class="fa fa-brain"></i> Verified Skills (Comma Separated)</label>
+                        <div class="value-display-mode" id="lbl_skills">No Skills Stated</div>
+                        <input type="text" id="i_skills" class="editor-input-field"
+                            placeholder="Java, Spring Boot, MySQL, JavaScript">
+                    </div>
+
+                    <div class="section-header"><i class="fa fa-user-tier"></i> Experience Classification</div>
+
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label><i class="fa fa-business-time"></i> Profile Category</label>
+                        <div class="value-display-mode" id="lbl_experienceType">FRESHER</div>
+                        <select id="i_experienceType" class="editor-input-field"
+                            onchange="toggleExperienceFields(this.value)">
+                            <option value="FRESHER">FRESHER (Academic / Entry-Level Node)</option>
+                            <option value="EXPERIENCED">EXPERIENCED (Professional Industry Node)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group experienced-only">
+                        <label><i class="fa fa-calendar-check"></i> Experience (In Years)</label>
+                        <div class="value-display-mode" id="lbl_experienceYears">0 Years</div>
+                        <input type="number" id="i_experienceYears" class="editor-input-field" min="0" step="0.5">
+                    </div>
+
+                    <div class="form-group experienced-only">
+                        <label><i class="fa fa-building"></i> Current Corporate Entity</label>
+                        <div class="value-display-mode" id="lbl_currentCompany">N/A</div>
+                        <input type="text" id="i_currentCompany" class="editor-input-field">
+                    </div>
+
+                    <div class="form-group experienced-only">
+                        <label><i class="fa fa-id-badge"></i> Current Designation</label>
+                        <div class="value-display-mode" id="lbl_currentDesignation">N/A</div>
+                        <input type="text" id="i_currentDesignation" class="editor-input-field">
+                    </div>
+
+                    <div class="form-group experienced-only">
+                        <label><i class="fa fa-clock"></i> Active Notice Period (Days)</label>
+                        <div class="value-display-mode" id="lbl_noticePeriod">N/A</div>
+                        <input type="text" id="i_noticePeriod" class="editor-input-field">
+                    </div>
+
+                    <div class="form-group experienced-only">
+                        <label><i class="fa fa-wallet"></i> Current Salary (LPA)</label>
+                        <div class="value-display-mode" id="lbl_currentSalary">N/A</div>
+                        <input type="text" id="i_currentSalary" class="editor-input-field">
+                    </div>
+
+                    <div class="form-group experienced-only">
+                        <label><i class="fa fa-hand-holding-usd"></i> Expected Comp Package (LPA)</label>
+                        <div class="value-display-mode" id="lbl_expectedSalary">N/A</div>
+                        <input type="text" id="i_expectedSalary" class="editor-input-field">
+                    </div>
+
+                    <div class="section-header fresher-only"><i class="fa fa-graduation-cap"></i> Academic Education
+                        Data</div>
+
+                    <div class="form-group fresher-only">
+                        <label><i class="fa fa-award"></i> Highest Qualification</label>
+                        <div class="value-display-mode" id="lbl_qualification">Not Configured</div>
+                        <input type="text" id="i_qualification" class="editor-input-field" placeholder="B.Tech / MCA">
+                    </div>
+
+                    <div class="form-group fresher-only">
+                        <label><i class="fa fa-university"></i> University / College Name</label>
+                        <div class="value-display-mode" id="lbl_collegeName">Not Configured</div>
+                        <input type="text" id="i_collegeName" class="editor-input-field">
+                    </div>
+
+                    <div class="form-group fresher-only">
+                        <label><i class="fa fa-chart-bar"></i> CGPA / Score Percentage</label>
+                        <div class="value-display-mode" id="lbl_cgpa">Not Configured</div>
+                        <input type="text" id="i_cgpa" class="editor-input-field">
+                    </div>
+
+                    <div class="form-group fresher-only">
+                        <label><i class="fa fa-calendar-alt"></i> Graduation Timeline Year</label>
+                        <div class="value-display-mode" id="lbl_graduationYear">Not Configured</div>
+                        <input type="number" id="i_graduationYear" class="editor-input-field" min="1990" max="2035">
+                    </div>
+
+                    <div class="section-header"><i class="fa fa-file-invoice"></i> Talent Asset Link</div>
+
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label><i class="fa fa-file-pdf"></i> Resume (PDF)</label>
+
+                        <div class="value-display-mode" id="lbl_resumeUrl">
+                            <span class="muted-text">No Resume Uploaded</span>
                         </div>
-                        <input type="url" id="i_resume" class="editor-input-field"
-                            placeholder="https://drive.google.com/.../view">
+
+                        <input type="file" id="i_resumeFile" class="editor-input-field" accept=".pdf">
+
+                        <small class="editor-input-field">
+                            Only PDF files are allowed.
+                        </small>
                     </div>
 
                 </div>
@@ -657,11 +862,13 @@
     <script>
         const STORAGE_TOKEN_KEY = "token";
         const STORAGE_USER_KEY = "user";
+        const API_PROFILE_ENDPOINT = "http://localhost:8080/api/user/profile";
+        const API_UPLOAD_ENDPOINT = "http://localhost:8080/api/user/upload-resume";
 
         let isEditStateActive = false;
         let globalCachedUserData = {};
 
-        // Page Init Interceptor
+        // Page Init Interceptor Pipeline
         document.addEventListener("DOMContentLoaded", () => {
             const token = localStorage.getItem(STORAGE_TOKEN_KEY);
             const userRaw = localStorage.getItem(STORAGE_USER_KEY);
@@ -675,15 +882,15 @@
                 const user = JSON.parse(userRaw);
                 setupSidebarProfile(user);
 
-                // Live Spring Boot Endpoint Profile Pull
+                // Secure Spring Boot Database Rest Core Pull
                 fetchSecureUserProfile(token);
             } catch (err) {
-                console.error("Authorization sync failed:", err);
+                console.error("Authorization engine sync failed:", err);
                 logoutUser();
             }
         });
 
-        // Sidebar user display logic
+        // Sidebar user identity sync block
         function setupSidebarProfile(user) {
             let currentRole = user.role ? user.role.toUpperCase() : "JOB_SEEKER";
             if (currentRole === "SEEKER") currentRole = "JOB_SEEKER";
@@ -700,10 +907,10 @@
             }
         }
 
-        // GET /api/user/profile Secure Database Fetch
+        // GET /api/user/profile Context Processor
         async function fetchSecureUserProfile(token) {
             try {
-                const response = await fetch("http://localhost:8080/api/user/profile", {
+                const response = await fetch(API_PROFILE_ENDPOINT, {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -722,39 +929,119 @@
             }
         }
 
-        // Populate Views & Inputs
+        // Maps structural DTO response parameters to UI view layers
         function populateProfileInterface(data) {
-            // Meta Top views
-            const calculatedName = data.full_name || data.fullName || "User Name";
+            // Meta Top Header parameters populate
+            const calculatedName = data.fullName || "User Name";
             document.getElementById("view_fullName").textContent = calculatedName;
             document.getElementById("view_badgeRole").textContent = data.role || "JOB_SEEKER";
             document.getElementById("largeProfileInitials").textContent = calculatedName.substring(0, 2).toUpperCase();
 
-            // Form values mapping (Label view modes)
+            // Progress Bar setup
+            const compScore = data.profileCompletion || 0;
+            document.getElementById("completionValue").textContent = `${compScore}%`;
+            document.getElementById("completionBarFill").style.width = `${compScore}%`;
+
+            // Personal Details Layer Mapping
             document.getElementById("lbl_fullName").textContent = calculatedName;
             document.getElementById("lbl_email").textContent = data.email || "N/A";
-            document.getElementById("lbl_phone").textContent = data.phone_number || data.phoneNumber || "Not Provisioned";
+            document.getElementById("lbl_phoneNumber").textContent = data.phoneNumber || "Not Assigned";
+            document.getElementById("lbl_currentCity").textContent = data.currentCity || "Not Provided";
 
-            // Resume Link render check
-            const targetResume = data.resume_url || data.resumeUrl;
-            const lblResume = document.getElementById("lbl_resume");
+            // Professional Ecosystem Mapping links
+            renderAnchorOrLabel("lbl_githubUrl", data.githubUrl);
+            renderAnchorOrLabel("lbl_linkedinUrl", data.linkedinUrl);
+            renderAnchorOrLabel("lbl_portfolioUrl", data.portfolioUrl);
+
+            // Skills Mapping
+            document.getElementById("lbl_skills").textContent = data.skills || "No Skills Stated";
+
+            // Experience Status Matrix Handling
+            const expType = data.experienceType || "FRESHER";
+            document.getElementById("lbl_experienceType").textContent = expType;
+
+            // Sub items populate details
+            document.getElementById("lbl_experienceYears").textContent = `${data.experienceYears || 0} Years`;
+            document.getElementById("lbl_currentCompany").textContent = data.currentCompany || "N/A";
+            document.getElementById("lbl_currentDesignation").textContent = data.currentDesignation || "N/A";
+            document.getElementById("lbl_noticePeriod").textContent = data.noticePeriod ? `${data.noticePeriod} Days` : "N/A";
+            document.getElementById("lbl_currentSalary").textContent = data.currentSalary ? `${data.currentSalary} LPA` : "N/A";
+            document.getElementById("lbl_expectedSalary").textContent = data.expectedSalary ? `${data.expectedSalary} LPA` : "N/A";
+
+            // Academic fields mapping
+            document.getElementById("lbl_qualification").textContent = data.qualification || "Not Configured";
+            document.getElementById("lbl_collegeName").textContent = data.collegeName || "Not Configured";
+            document.getElementById("lbl_cgpa").textContent = data.cgpa || "Not Configured";
+            document.getElementById("lbl_graduationYear").textContent = data.graduationYear || "Not Configured";
+
+            // Asset Talent Resume File Link Rendering
+            const targetResume = data.resumeUrl;
+            const lblResume = document.getElementById("lbl_resumeUrl");
             if (targetResume) {
-                lblResume.innerHTML = `<a href="${targetResume}" target="_blank" class="live-resume-anchor"><i class="fa fa-external-link-alt"></i> View Uploaded Document</a>`;
+                // Path me se unique filename split karke nikalne ka clean logic
+                const fileName = targetResume.substring(targetResume.lastIndexOf('/') + 1) || "download-resume.pdf";
+                lblResume.innerHTML = `<a href="http://localhost:8080${targetResume}" target="_blank" class="live-resume-anchor"><i class="fa fa-file-pdf"></i> 📄 ${fileName}</a>`;
             } else {
-                lblResume.innerHTML = `<span class="muted-text">No document linked</span>`;
+                lblResume.innerHTML = `<span class="muted-text">No Resume Uploaded</span>`;
             }
 
-            // Input Fields setup for editor context
+            // Sync Editor Inputs values precisely
             document.getElementById("i_fullName").value = calculatedName;
             document.getElementById("i_email").value = data.email || "";
-            document.getElementById("i_phone").value = data.phone_number || data.phoneNumber || "";
-            document.getElementById("i_resume").value = targetResume || "";
+            document.getElementById("i_phoneNumber").value = data.phoneNumber || "";
+            document.getElementById("i_currentCity").value = data.currentCity || "";
+            document.getElementById("i_githubUrl").value = data.githubUrl || "";
+            document.getElementById("i_linkedinUrl").value = data.linkedinUrl || "";
+            document.getElementById("i_portfolioUrl").value = data.portfolioUrl || "";
+            document.getElementById("i_skills").value = data.skills || "";
+            document.getElementById("i_experienceType").value = expType;
+            document.getElementById("i_experienceYears").value = data.experienceYears || 0;
+            document.getElementById("i_currentCompany").value = data.currentCompany || "";
+            document.getElementById("i_currentDesignation").value = data.currentDesignation || "";
+            document.getElementById("i_noticePeriod").value = data.noticePeriod || "";
+            document.getElementById("i_currentSalary").value = data.currentSalary || "";
+            document.getElementById("i_expectedSalary").value = data.expectedSalary || "";
+            document.getElementById("i_qualification").value = data.qualification || "";
+            document.getElementById("i_collegeName").value = data.collegeName || "";
+            document.getElementById("i_cgpa").value = data.cgpa || "";
+            document.getElementById("i_graduationYear").value = data.graduationYear || "";
+
+            // File type input elements can't have their programmatic values forced due to DOM security rules,
+            // so we reset it to let the fresh file choose seamlessly.
+            const fileInput = document.getElementById("i_resumeFile");
+            if (fileInput) fileInput.value = "";
+
+            // Dynamic Visibility Grid Frame Filter Refresh
+            toggleExperienceFields(expType);
         }
 
-        // Toggle Form Edit System Engine (Matches PostOffice mechanism)
+        // Helper dynamic link renderer rendering tool
+        function renderAnchorOrLabel(elementId, value) {
+            const container = document.getElementById(elementId);
+            if (value && value.trim() !== "") {
+                container.innerHTML = `<a href="${value}" target="_blank" class="live-resume-anchor"><i class="fa fa-external-link-alt"></i> Connect Node Asset</a>`;
+            } else {
+                container.innerHTML = `<span class="muted-text">Not Provisioned</span>`;
+            }
+        }
+
+        // Handles conditional block visualization matrices
+        function toggleExperienceFields(type) {
+            const experiencedElements = document.querySelectorAll(".experienced-only");
+            const fresherElements = document.querySelectorAll(".fresher-only");
+
+            if (type === "EXPERIENCED") {
+                experiencedElements.forEach(el => el.style.display = "flex");
+                fresherElements.forEach(el => el.style.display = "none");
+            } else {
+                experiencedElements.forEach(el => el.style.display = "none");
+                fresherElements.forEach(el => el.style.display = "flex");
+            }
+        }
+
+        // Controls View and Input Field State Modifiers
         function toggleEditMode() {
             isEditStateActive = !isEditStateActive;
-            const formContainer = document.getElementById("profileForm");
             const toggleBtn = document.getElementById("editToggleBtn");
             const controlPanel = document.getElementById("editorControlPanel");
 
@@ -762,31 +1049,87 @@
                 document.body.classList.add("edit-mode-active");
                 toggleBtn.innerHTML = `<i class="fa fa-times"></i> Exit Editor`;
                 controlPanel.style.display = "flex";
+                document.querySelectorAll(".experienced-only, .fresher-only").forEach(el => el.style.display = "flex");
             } else {
                 document.body.classList.remove("edit-mode-active");
                 toggleBtn.innerHTML = `<i class="fa fa-edit"></i> Edit Profile`;
                 controlPanel.style.display = "none";
-                // Reset to saved state
                 populateProfileInterface(globalCachedUserData);
             }
         }
 
-        // PUT /api/user/profile Form Submit Sync
+        // Upgraded Core Two-Step Save Logic Workflow (Multipart Upload + Profile Sync JSON)
         async function handleProfileUpdateSubmit(e) {
             e.preventDefault();
             const token = localStorage.getItem(STORAGE_TOKEN_KEY);
+            const selectedExpType = document.getElementById("i_experienceType").value;
 
-            // Construct DTO structural packet matching MySQL column properties mapping
+            let finalResumeUrlPath = globalCachedUserData.resumeUrl; // Default backup if file change omitted
+
+            // STEP 1: Multipart Engine Binary Form Processing Interceptor
+            const fileInputElement = document.getElementById("i_resumeFile");
+            if (fileInputElement && fileInputElement.files.length > 0) {
+                const resumeFile = fileInputElement.files[0];
+                const formData = new FormData();
+                formData.append("resume", resumeFile);
+
+                try {
+                    // Multi-part processing request
+                    const uploadResponse = await fetch(API_UPLOAD_ENDPOINT, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                            // Content-Type omitted dynamically to let the browser frame multi-part boundaries properly
+                        },
+                        body: formData
+                    });
+
+                    if (!uploadResponse.ok) {
+                        throw new Error("Server rejected multipart file storage processing stream.");
+                    }
+
+                    // Parse textual server upload response path string
+                    const uploadedResumePath = await uploadResponse.text();
+                    if (uploadedResumePath && uploadedResumePath.trim() !== "") {
+                        finalResumeUrlPath = uploadedResumePath.trim();
+                    }
+                } catch (uploadErr) {
+                    console.error("Talent resume asset deployment failure:", uploadErr);
+                    triggerToastAlert("❌ Resume upload pipeline failed. Profile update aborted.", "error");
+                    return; // Block profile compilation to avoid transactional inconsistencies
+                }
+            }
+
+            // STEP 2: Strict camelCase packet compilation layer mapped exactly to database entities
             const profilePayloadDTO = {
-                full_name: document.getElementById("i_fullName").value.trim(),
+                fullName: document.getElementById("i_fullName").value.trim(),
                 email: document.getElementById("i_email").value.trim(),
-                phone_number: document.getElementById("i_phone").value.trim(),
-                resume_url: document.getElementById("i_resume").value.trim(),
+                phoneNumber: document.getElementById("i_phoneNumber").value.trim(),
+                currentCity: document.getElementById("i_currentCity").value.trim(),
+                githubUrl: document.getElementById("i_githubUrl").value.trim(),
+                linkedinUrl: document.getElementById("i_linkedinUrl").value.trim(),
+                portfolioUrl: document.getElementById("i_portfolioUrl").value.trim(),
+                skills: document.getElementById("i_skills").value.trim(),
+                experienceType: selectedExpType,
+
+                experienceYears: selectedExpType === "EXPERIENCED" ? parseFloat(document.getElementById("i_experienceYears").value) || 0 : 0,
+                currentCompany: selectedExpType === "EXPERIENCED" ? document.getElementById("i_currentCompany").value.trim() : "",
+                currentDesignation: selectedExpType === "EXPERIENCED" ? document.getElementById("i_currentDesignation").value.trim() : "",
+                noticePeriod: selectedExpType === "EXPERIENCED" ? document.getElementById("i_noticePeriod").value.trim() : "",
+                currentSalary: selectedExpType === "EXPERIENCED" ? document.getElementById("i_currentSalary").value.trim() : "",
+                expectedSalary: selectedExpType === "EXPERIENCED" ? document.getElementById("i_expectedSalary").value.trim() : "",
+
+                qualification: selectedExpType === "FRESHER" ? document.getElementById("i_qualification").value.trim() : "",
+                collegeName: selectedExpType === "FRESHER" ? document.getElementById("i_collegeName").value.trim() : "",
+                cgpa: selectedExpType === "FRESHER" ? document.getElementById("i_cgpa").value.trim() : "",
+                graduationYear: selectedExpType === "FRESHER" ? parseInt(document.getElementById("i_graduationYear").value, 10) || null : null,
+
+                resumeUrl: finalResumeUrlPath, // Linked directly from processing pipeline step
                 role: globalCachedUserData.role || "JOB_SEEKER"
             };
 
             try {
-                const response = await fetch("http://localhost:8080/api/user/profile", {
+                const response = await fetch(API_PROFILE_ENDPOINT, {
                     method: "PUT",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -800,21 +1143,19 @@
                     throw new Error(errorMsg || "Database rejected schema write mapping process.");
                 }
 
-                // Success
-                triggerToastAlert("✅ Profile Records Updated Successfully on MySQL Database!", "success");
+                triggerToastAlert("✅ Profile Records & Resume Document Synced on Server!", "success");
 
-                // Local memory caching parameters refresh
-                globalCachedUserData = { ...globalCachedUserData, ...profilePayloadDTO };
+                // Pull fresh dataset records immediately to recalculate complete scores and fetch server state configurations
+                await fetchSecureUserProfile(token);
 
-                // Sidebar visual identity update optimization
+                // Update session memory details
                 const userSessionObj = JSON.parse(localStorage.getItem(STORAGE_USER_KEY));
-                userSessionObj.name = profilePayloadDTO.full_name;
+                userSessionObj.name = globalCachedUserData.fullName;
                 localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(userSessionObj));
                 setupSidebarProfile(userSessionObj);
 
-                // Exit Edit states and load data
+                // Exit editor stream route states
                 toggleEditMode();
-                populateProfileInterface(globalCachedUserData);
 
             } catch (err) {
                 console.error(err);
@@ -822,7 +1163,7 @@
             }
         }
 
-        // Toast alert pipeline
+        // Toast Notification Pipeline Hub
         function triggerToastAlert(msg, mode) {
             const toast = document.getElementById("toastNotificationHub");
             toast.textContent = msg;
@@ -833,7 +1174,7 @@
             }, 4000);
         }
 
-        // Safe Sign-Out system cleanup
+        // Safe Sign-Out system context cleanup
         function logoutUser() {
             localStorage.removeItem(STORAGE_TOKEN_KEY);
             localStorage.removeItem(STORAGE_USER_KEY);

@@ -22,82 +22,80 @@
             --border-focus: #6366f1;
             --indigo-main: #4f46e5;
             --indigo-light: #6366f1;
-            --indigo-glow: rgba(79, 70, 229, 0.25);
             --cyan-main: #06b6d4;
-            --cyan-glow: rgba(6, 182, 212, 0.2);
-            --text-main: #f1f5f9;
-            --text-sub: #94a3b8;
-            --text-muted: #475569;
+            --cyan-light: #22d3ee;
+            --pink-alert: #ec4899;
             --green-success: #10b981;
-            --red-alert: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-blur: blur(16px);
         }
 
-        /* ─── BASE RESET & SETUP ─── */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
         }
 
         body {
-            background-color: var(--bg-navy);
+            background: radial-gradient(circle at 0% 0%, #0f172a 0%, #060a12 100%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px 15px;
+            padding: 40px 20px;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Ambient Cosmic Cyber Background Elements */
+        /* Ambient Cyber Glow Background Spheres */
         body::before {
-            content: "";
+            content: '';
             position: absolute;
-            inset: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+            top: -100px;
+            left: -100px;
             z-index: 0;
             pointer-events: none;
-            background:
-                radial-gradient(at 10% 15%, rgba(79, 70, 229, 0.15) 0px, transparent 45%),
-                radial-gradient(at 90% 85%, rgba(6, 182, 212, 0.1) 0px, transparent 40%);
-            background-attachment: fixed;
         }
 
-        /* Cybernetic Grid Matrix Overlay */
-        .grid-layer {
+        body::after {
+            content: '';
             position: absolute;
-            inset: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
+            bottom: -150px;
+            right: -100px;
             z-index: 0;
             pointer-events: none;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.008) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.008) 1px, transparent 1px);
-            background-size: 45px 45px;
-            opacity: 0.8;
         }
 
-        /* ─── MINI PAGE FORM CONTAINER ─── */
-        .form-terminal-wrapper {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 620px;
+        /* Glassmorphic Shell Wrapper container */
+        .glass-form-container {
             background: var(--card-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-color);
             border-radius: 24px;
+            width: 100%;
+            max-width: 680px;
             padding: 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: formEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
+            animation: fadeInContainer 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes formEntrance {
+        @keyframes fadeInContainer {
             from {
                 opacity: 0;
-                transform: translateY(30px) scale(0.98);
+                transform: translateY(20px) scale(0.98);
             }
 
             to {
@@ -106,137 +104,212 @@
             }
         }
 
-        /* Form Identity Headers */
+        /* Header block designs */
         .form-header {
-            text-align: center;
             margin-bottom: 35px;
+            text-align: center;
+            position: relative;
         }
 
-        .form-header .brand-icon {
+        .form-header .brand-pill {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 54px;
-            height: 54px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            color: var(--cyan-main);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px var(--cyan-glow);
+            gap: 6px;
+            background: rgba(79, 70, 229, 0.15);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--cyan-light);
+            margin-bottom: 16px;
         }
 
         .form-header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        /* Context Target Job Preview Card layout Frame */
+        .job-preview-banner {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .job-details-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .job-details-group .job-title-label {
+            font-size: 1.15rem;
+            font-weight: 700;
             color: var(--text-main);
         }
 
-        /* Dynamic Job Spec Target Header */
-        .job-target-badge {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 16px;
-            background: rgba(99, 102, 241, 0.08);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 10px;
-        }
-
-        .job-target-badge p {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            font-weight: 500;
-        }
-
-        .job-target-badge #targetJobTitle {
-            color: var(--indigo-light);
-            font-weight: 700;
-        }
-
-        /* ─── COMPONENT INPUT FIELDS ─── */
-        .input-group-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 22px;
-        }
-
-        .field-block {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 22px;
-        }
-
-        .field-block.no-margin {
-            margin-bottom: 0;
-        }
-
-        .field-block label {
+        .job-details-group .job-id-tag {
             font-size: 0.8rem;
+            color: var(--cyan-main);
+            font-family: monospace;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-sub);
+        }
+
+        .job-preview-banner .badge-verified-target {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: var(--green-success);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .field-block label i {
-            color: var(--cyan-main);
-            font-size: 0.85rem;
+        /* Structural Field Grid Blocks controls */
+        .field-block {
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        /* Standardized Inputs & Interactive States */
+        .field-block label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .field-block label i {
+            color: var(--indigo-light);
+            font-size: 0.9rem;
+        }
+
         .input-control {
             width: 100%;
-            padding: 13px 16px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--border-color);
             border-radius: 12px;
+            padding: 14px 16px;
             color: var(--text-main);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             outline: none;
             transition: all 0.25s ease;
         }
 
         .input-control:focus {
             border-color: var(--border-focus);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 14px var(--indigo-glow);
-        }
-
-        .input-control::placeholder {
-            color: rgba(255, 255, 255, 0.25);
-        }
-
-        .input-control[readonly] {
-            background: rgba(255, 255, 255, 0.01);
-            color: var(--text-sub);
-            cursor: not-allowed;
-            border-style: dashed;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+            background: rgba(15, 23, 42, 0.8);
         }
 
         textarea.input-control {
+            min-height: 150px;
             resize: vertical;
-            min-height: 110px;
+            line-height: 1.6;
         }
 
-        /* ─── TERMINAL RESPONSE PANEL ─── */
-        #responseAlert {
-            display: none;
-            padding: 14px 18px;
+        .input-control::placeholder {
+            color: rgba(148, 163, 184, 0.45);
+        }
+
+        /* Action Panel controls alignment */
+        .form-actions {
+            margin-top: 35px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 16px;
+        }
+
+        .btn-submit,
+        .btn-cancel {
+            padding: 14px 24px;
             border-radius: 12px;
-            font-size: 0.88rem;
-            margin-bottom: 25px;
-            line-height: 1.4;
-            animation: alertSlide 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            outline: none;
         }
 
-        @keyframes alertSlide {
+        .btn-submit {
+            background: linear-gradient(135deg, var(--indigo-main) 0%, #3b82f6 100%);
+            border: none;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+            filter: brightness(1.1);
+        }
+
+        .btn-submit:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: #e2e8f0;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Toast Popup Window Alert Elements Styles */
+        [id="responseAlert"] {
+            display: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            animation: slideDownAlert 0.3s ease forwards;
+        }
+
+        @keyframes slideDownAlert {
             from {
                 opacity: 0;
                 transform: translateY(-10px);
@@ -248,103 +321,36 @@
             }
         }
 
-        #responseAlert.alert-success {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.2);
+        .alert-error {
+            background: rgba(244, 63, 94, 0.12);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: #fda4af;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
             color: #a7f3d0;
         }
 
-        #responseAlert.alert-error {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #fca5a5;
-        }
-
-        /* ─── SYSTEM BUTTON CONTROLS ─── */
-        .form-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .btn-submit {
-            flex: 2;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--indigo-main) 0%, var(--indigo-light) 100%);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.92rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.25s ease;
-            box-shadow: 0 8px 20px var(--indigo-glow);
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-            box-shadow: 0 12px 24px rgba(79, 70, 229, 0.4);
-        }
-
-        .btn-submit:active {
-            transform: translateY(0);
-        }
-
-        .btn-submit:disabled {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-
-        .btn-cancel {
-            flex: 1;
-            padding: 14px;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-sub);
-            font-weight: 500;
-            font-size: 0.92rem;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.25s;
-        }
-
-        .btn-cancel:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-main);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        /* ─── SCREEN RESPONSIVENESS ─── */
-        @media (max-width: 576px) {
-            .form-terminal-wrapper {
-                padding: 25px 20px;
-                border-radius: 20px;
-            }
-
-            .input-group-row {
-                grid-template-columns: 1fr;
-                gap: 0;
+        /* Mobile Responsive Breakpoint adjustment matrix */
+        @media(max-width: 576px) {
+            .glass-form-container {
+                padding: 24px;
             }
 
             .form-actions {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
 
-            .btn-submit,
-            .btn-cancel {
-                width: 100%;
+            .form-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .job-preview-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
             }
         }
     </style>
@@ -352,47 +358,31 @@
 
 <body>
 
-    <div class="grid-layer"></div>
-
-    <div class="form-terminal-wrapper">
+    <div class="glass-form-container">
         <div class="form-header">
-            <div class="brand-icon"><i class="fas fa-paper-plane"></i></div>
-            <h1>Apply For Position</h1>
-            <div class="job-target-badge">
-                <p>Target Node: <span id="targetJobTitle">Loading Job Context...</span></p>
+            <div class="brand-pill"><i class="fas fa-shield-halved"></i> Secure JobSphere Dispatch</div>
+            <h1>Submit Application</h1>
+            <p>Complete your application request wrapper terminal safely below.</p>
+        </div>
+
+        <div class="job-preview-banner">
+            <div class="job-details-group">
+                <span id="jobTitleDisplay" class="job-title-label">Loading Position Metadata...</span>
+                <span id="jobIdDisplay" class="job-id-tag">JOB-ID: PENDING SYNC</span>
+            </div>
+            <div class="badge-verified-target">
+                <i class="fas fa-check-circle"></i> Pipeline Active
             </div>
         </div>
 
         <div id="responseAlert"></div>
 
-        <form id="applicationPostForm" onsubmit="executeJobApplication(event)">
-
-            <div class="input-group-row">
-                <div class="field-block">
-                    <label><i class="fas fa-hashtag"></i> Job ID</label>
-                    <input type="text" id="formJobId" class="input-control" readonly required>
-                </div>
-                <div class="field-block">
-                    <label><i class="fas fa-fingerprint"></i> User Token Key</label>
-                    <input type="text" id="formUserId" class="input-control" readonly required>
-                </div>
-            </div>
-
-            <div class="input-group-row">
-                <div class="field-block">
-                    <label><i class="fas fa-user"></i> Applicant Profile Name</label>
-                    <input type="text" id="formUserName" class="input-control" readonly>
-                </div>
-                <div class="field-block">
-                    <label><i class="fas fa-envelope"></i> Communication Node</label>
-                    <input type="text" id="formUserEmail" class="input-control" readonly>
-                </div>
-            </div>
+        <form id="applicationForm" onsubmit="executeApplicationSubmissionPipeline(event)">
 
             <div class="field-block">
                 <label for="formResumeLink"><i class="fas fa-link"></i> Digital Resume Link / Cloud Asset</label>
-                <input type="url" id="formResumeLink" class="input-control"
-                    placeholder="https://drive.google.com/file/d/... or GitHub url" required>
+                <input type="text" id="formResumeLink" class="input-control"
+                    placeholder="Checking user profile configuration..." required>
             </div>
 
             <div class="field-block">
@@ -412,15 +402,217 @@
     </div>
 
     <script>
-        function applyToPosition(jobId) {
+        const STORAGE_TOKEN_KEY = "token";
+        const API_PROFILE_ENDPOINT = "http://localhost:8080/api/user/profile";
+        const API_APPLY_ENDPOINT = "http://localhost:8080/api/application/apply";
 
-            const selectedJob = allJobsArray.find(job =>
-                (job.jobId || job.job_id || job.id) == jobId
-            );
+        let globalResumeUrlPath = null;
+        let currentTargetJobId = null;
 
-            localStorage.setItem("selectedJob", JSON.stringify(selectedJob));
+        // Orchestrate application runtime interceptors on DOM ready state
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem(STORAGE_TOKEN_KEY);
+            if (!token) {
+                alert("Session token expired or missing. Directing to login.");
+                window.location.href = "Login.html";
+                return;
+            }
 
-            window.location.href = "FillApplication.html";
+            // Hydrate Targeted Job Node context from browse page local state
+            hydrateTargetJobMetadata();
+
+            // Securely look up user profile context to verify talent resume attachment assets
+            fetchUserProfileAsset(token);
+        });
+
+        /**
+         * Extracts targeted job descriptor metadata cached in state mapping sequence
+         */
+        function hydrateTargetJobMetadata() {
+            const serializedJob = localStorage.getItem("selectedJob");
+            if (!serializedJob) {
+                displayAlert("Error: Direct job reference context missing. Returning to terminal browse hub.", "error");
+                setTimeout(() => { window.location.href = "UserJob.html"; }, 3000);
+                return;
+            }
+
+            try {
+                const parsedJob = JSON.parse(serializedJob);
+
+                // Map state tracking parameters
+                currentTargetJobId = parsedJob.jobId || parsedJob.job_id || parsedJob.id;
+
+                // Render textual descriptor values inside static page containers cleanly
+                const jobTitleContainer = document.getElementById("jobTitleDisplay");
+                const jobIdContainer = document.getElementById("jobIdDisplay");
+
+                if (jobTitleContainer) jobTitleContainer.textContent = parsedJob.title || parsedJob.jobTitle || "Technical Position";
+                if (jobIdContainer) jobIdContainer.textContent = currentTargetJobId || "N/A";
+
+            } catch (err) {
+                console.error("Critical Failure parsing internal state job descriptors:", err);
+                displayAlert("Failed to load chosen job parameter vectors from local cache storage.", "error");
+            }
+        }
+
+        /**
+         * Pulls core user account entity using active Auth Header Context
+         */
+        async function fetchUserProfileAsset(token) {
+            const resumeFieldInput = document.getElementById("formResumeLink");
+
+            try {
+                const response = await fetch(API_PROFILE_ENDPOINT, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("Spring Boot profile service rejected session authentication sequence.");
+                }
+
+                const profileData = await response.json();
+
+                if (profileData && profileData.resumeUrl && profileData.resumeUrl.trim() !== "") {
+                    globalResumeUrlPath = profileData.resumeUrl.trim();
+
+                    // Extrapolate simple filename string vector from resource path structure safely
+                    const targetFileName = globalResumeUrlPath.substring(globalResumeUrlPath.lastIndexOf('/') + 1) || "Linked-Resume.pdf";
+
+                    if (resumeFieldInput) {
+                        resumeFieldInput.value = `📄 ${targetFileName}`;
+                        resumeFieldInput.disabled = true; // Lock field strictly for rendering display purposes
+                        resumeFieldInput.style.cursor = "not-allowed";
+                        resumeFieldInput.style.opacity = "0.8";
+                    }
+                } else {
+                    globalResumeUrlPath = null;
+                    if (resumeFieldInput) {
+                        resumeFieldInput.value = "No Resume Uploaded";
+                        resumeFieldInput.disabled = true;
+                        resumeFieldInput.style.color = "#ec4899"; // Display neon warning accent matching premium UI theme
+                    }
+                }
+
+            } catch (err) {
+                console.error("Failed to safely authenticate profile metadata state architecture:", err);
+                displayAlert("Error loading candidate profile records. Verify system access connectivity status.", "error");
+                if (resumeFieldInput) {
+                    resumeFieldInput.value = "Unable to verify secure file asset links";
+                    resumeFieldInput.disabled = true;
+                }
+            }
+        }
+
+        /**
+         * Handles formal application form submission pipeline dispatching
+         */
+        async function executeApplicationSubmissionPipeline(event) {
+            event.preventDefault();
+
+            const token = localStorage.getItem(STORAGE_TOKEN_KEY);
+            const coverLetterValue = document.getElementById("formCoverLetter") ? document.getElementById("formCoverLetter").value.trim() : "";
+            const submitButton = document.getElementById("submitFormButton");
+
+            // 1. Structural cover letter data validations
+            if (!coverLetterValue) {
+                displayAlert("Please write a brief pitch summary before processing dispatch parameters.", "error");
+                return;
+            }
+
+            // 2. Rigid validation to verify presence of talent resume asset linkage
+            if (!globalResumeUrlPath) {
+                displayAlert("Please upload your resume in My Profile before applying.", "error");
+                return;
+            }
+
+            if (!currentTargetJobId) {
+                displayAlert("Critical Context Failure: Target job descriptor id missing. Aborting operation.", "error");
+                return;
+            }
+
+            // UI State Interceptor: Restrict multiple rapid form triggers
+            const originalButtonHtmlMarkup = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Dispatched Processing Node...`;
+
+            // 3. Construct clean optimized deployment request schema matching new rules framework exactly
+            const requestPayload = {
+                jobId: LongifyValue(currentTargetJobId),
+                coverLetter: coverLetterValue
+            };
+
+            try {
+                const response = await fetch(API_APPLY_ENDPOINT, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestPayload)
+                });
+
+                if (response.ok) {
+                    displayAlert("🚀 Application Transferred Successfully! Syncing tracking modules...", "success");
+
+                    // Clear state memory parameters cleanly
+                    localStorage.removeItem("selectedJob");
+
+                    setTimeout(() => {
+                        window.location.href = "UserApplication.html";
+                    }, 2200);
+
+                } else {
+                    const functionalServerErrorText = await response.text();
+                    throw new Error(functionalServerErrorText || "Spring Boot internal service threw validation exceptions.");
+                }
+
+            } catch (pipelineErr) {
+                console.error("Critical Exception caught during data dispatch sequence operations:", pipelineErr);
+                displayAlert(`Transaction Refused: ${pipelineErr.message}`, "error");
+
+                // Restore button operational states safely
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonHtmlMarkup;
+            }
+        }
+
+        /**
+         * Utility tool to ensure job identity values are parsed into consistent number formatting
+         */
+        function LongifyValue(inputVal) {
+            const parsedValue = parseInt(inputVal, 10);
+            return isNaN(parsedValue) ? inputVal : parsedValue;
+        }
+
+        /**
+         * Aborts contextual workflow stream routing paths cleanly
+         */
+        function abortFormRoute() {
+            localStorage.removeItem("selectedJob");
+            window.location.href = "UserJob.html";
+        }
+
+        /**
+         * Utility alert message view component box state mapping modifier logic
+         */
+        function displayAlert(message, type) {
+            const responseAlertBox = document.getElementById("responseAlert");
+            if (!responseAlertBox) return;
+
+            responseAlertBox.style.display = "block";
+            responseAlertBox.textContent = message;
+
+            if (type === "success") {
+                responseAlertBox.className = "alert-success";
+            } else {
+                responseAlertBox.className = "alert-error";
+            }
+
+            responseAlertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     </script>
 </body>

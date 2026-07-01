@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.jobportal.Config.JwtUtil;
 import com.example.jobportal.DTO.UserDto;
+import com.example.jobportal.Model.ExperienceType;
 import com.example.jobportal.Model.Role;
 import com.example.jobportal.Model.User;
 import com.example.jobportal.Repository.UserRepository;
@@ -51,6 +52,8 @@ public class AuthService {
         // Default role JOB_SEEKER, ya DTO se jo aaye
         user.setRole(Role.JOB_SEEKER);
         user.setActive(true);
+        user.setExperienceType(ExperienceType.FRESHER);
+        user.setProfileCompletion(20);
 
         userRepository.save(user);
         return "User Registered Successfully";
@@ -80,6 +83,8 @@ public class AuthService {
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setExperienceType(ExperienceType.FRESHER);
+        user.setProfileCompletion(20);
 
         // 👇 Employer role
         user.setRole(Role.EMPLOYER);
