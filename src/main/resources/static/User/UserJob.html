@@ -482,8 +482,9 @@
             <div id="seekerMenu" style="display:none;">
                 <h3>Job Hunting</h3>
                 <a href="UserHome.html" class="nav-link"><i class="fa fa-chart-pie"></i> Dashboard</a>
-                <a href="#" class="nav-link active"><i class="fa fa-briefcase"></i> Browse Jobs</a>
-                <a href="UserCompanies.html" class="nav-link"><i class="fa fa-paper-plane"></i> Companies</a>
+                <a href="UserJob.html" class="nav-link active"><i class="fa fa-briefcase"></i> Browse Jobs</a>
+                <a href="UserCompanies.html" class="nav-link "><i class="fa fa-building"></i> Companies</a>
+                <a href="UserApplication.html" class="nav-link"><i class="fa fa-paper-plane"></i> My Applications</a>
                 <a href="UserProfile.html" class="nav-link"><i class="fa fa-user"></i> My Profile</a>
             </div>
 
@@ -539,7 +540,7 @@
 
             if (!token || !userRaw) {
                 console.warn("Unauthorized access. Redirecting to login window.");
-                window.location.href = "UserLogin.html";
+                window.location.href = "Login.html";
                 return;
             }
 
@@ -749,28 +750,69 @@
         }
 
         // Application Submission Logic via API
-        async function applyToPosition(jobId, jobTitle) {
-            const token = localStorage.getItem(STORAGE_TOKEN_KEY);
+        // =======================================
+        // Apply Button Click
+        // Open FillApplication.html with Job Data
+        // =======================================
 
-            try {
-                const response = await fetch(`http://localhost:8080/api/applications/apply/${jobId}`, {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
-                });
+        function applyToPosition(jobId, jobTitle) {
 
-                if (response.ok) {
-                    alert(`🎉 Success! Your job application request for "${jobTitle}" has been securely logged on the backend database.`);
-                } else {
-                    const errorText = await response.text();
-                    alert(`Failed to apply: ${errorText || 'Server error occurred.'}`);
-                }
-            } catch (err) {
-                console.error("Application error:", err);
-                alert(`🎉 Application Request Sent successfully for Job ID ${jobId}: [${jobTitle}]! (Using client safety handler)`);
+            // Selected Job Find
+            const selectedJob = allJobsArray.find(job =>
+                (job.jobId || job.job_id || job.id) == jobId
+            );
+
+            if (!selectedJob) {
+                alert("Job details not found.");
+                return;
             }
+
+            // Save complete job details
+            localStorage.setItem("selectedJob", JSON.stringify({
+
+                jobId: selectedJob.jobId || selectedJob.job_id || selectedJob.id,
+
+                title:
+                    selectedJob.jobTitle ||
+                    selectedJob.job_title ||
+                    selectedJob.title,
+
+                company:
+                    selectedJob.companyName ||
+                    selectedJob.company_name ||
+                    selectedJob.company,
+
+                location:
+                    selectedJob.location,
+
+                salary:
+                    selectedJob.salary,
+
+                description:
+                    selectedJob.description,
+
+                experience:
+                    selectedJob.experienceLevel ||
+                    selectedJob.experience_level ||
+                    selectedJob.experience,
+
+                jobType:
+                    selectedJob.jobType ||
+                    selectedJob.job_type,
+
+                skills:
+                    selectedJob.skills,
+
+                recruiterId:
+                    selectedJob.recruiterId,
+
+                createdAt:
+                    selectedJob.createdAt
+
+            }));
+
+            // Open Application Form Page
+            window.location.href = "FillApplication.html";
         }
 
         // Helper Status Toast/Box
@@ -786,7 +828,7 @@
             localStorage.removeItem(STORAGE_TOKEN_KEY);
             localStorage.removeItem(STORAGE_USER_KEY);
             alert("Securely logging out from JobSphere system.");
-            window.location.href = "UserLogin.html";
+            window.location.href = "../index.html";
         }
     </script>
 </body>

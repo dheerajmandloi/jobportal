@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Application — JobSphere</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==================================================================
+       JobSphere — Glassmorphic Application Form Stylesheet
+       Theme: Midnight Cyber Navy with Electric Cyan & Indigo Accents
+    ================================================================== */
+        :root {
+            --bg-navy: #060a12;
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-focus: #6366f1;
+            --indigo-main: #4f46e5;
+            --indigo-light: #6366f1;
+            --indigo-glow: rgba(79, 70, 229, 0.25);
+            --cyan-main: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.2);
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --text-muted: #475569;
+            --green-success: #10b981;
+            --red-alert: #ef4444;
+        }
+
+        /* ─── BASE RESET & SETUP ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-navy);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Cosmic Cyber Background Elements */
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(at 10% 15%, rgba(79, 70, 229, 0.15) 0px, transparent 45%),
+                radial-gradient(at 90% 85%, rgba(6, 182, 212, 0.1) 0px, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Cybernetic Grid Matrix Overlay */
+        .grid-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.008) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.008) 1px, transparent 1px);
+            background-size: 45px 45px;
+            opacity: 0.8;
+        }
+
+        /* ─── MINI PAGE FORM CONTAINER ─── */
+        .form-terminal-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 620px;
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: formEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes formEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Form Identity Headers */
+        .form-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .form-header .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            color: var(--cyan-main);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--cyan-glow);
+        }
+
+        .form-header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        /* Dynamic Job Spec Target Header */
+        .job-target-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 10px;
+        }
+
+        .job-target-badge p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .job-target-badge #targetJobTitle {
+            color: var(--indigo-light);
+            font-weight: 700;
+        }
+
+        /* ─── COMPONENT INPUT FIELDS ─── */
+        .input-group-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .field-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+
+        .field-block.no-margin {
+            margin-bottom: 0;
+        }
+
+        .field-block label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .field-block label i {
+            color: var(--cyan-main);
+            font-size: 0.85rem;
+        }
+
+        /* Standardized Inputs & Interactive States */
+        .input-control {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .input-control:focus {
+            border-color: var(--border-focus);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 14px var(--indigo-glow);
+        }
+
+        .input-control::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .input-control[readonly] {
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-sub);
+            cursor: not-allowed;
+            border-style: dashed;
+        }
+
+        textarea.input-control {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        /* ─── TERMINAL RESPONSE PANEL ─── */
+        #responseAlert {
+            display: none;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            animation: alertSlide 0.3s ease;
+        }
+
+        @keyframes alertSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #responseAlert.alert-success {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #a7f3d0;
+        }
+
+        #responseAlert.alert-error {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        /* ─── SYSTEM BUTTON CONTROLS ─── */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn-submit {
+            flex: 2;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--indigo-main) 0%, var(--indigo-light) 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.92rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px var(--indigo-glow);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 12px 24px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-sub);
+            font-weight: 500;
+            font-size: 0.92rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ─── SCREEN RESPONSIVENESS ─── */
+        @media (max-width: 576px) {
+            .form-terminal-wrapper {
+                padding: 25px 20px;
+                border-radius: 20px;
+            }
+
+            .input-group-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn-submit,
+            .btn-cancel {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-layer"></div>
+
+    <div class="form-terminal-wrapper">
+        <div class="form-header">
+            <div class="brand-icon"><i class="fas fa-paper-plane"></i></div>
+            <h1>Apply For Position</h1>
+            <div class="job-target-badge">
+                <p>Target Node: <span id="targetJobTitle">Loading Job Context...</span></p>
+            </div>
+        </div>
+
+        <div id="responseAlert"></div>
+
+        <form id="applicationPostForm" onsubmit="executeJobApplication(event)">
+
+            <div class="input-group-row">
+                <div class="field-block">
+                    <label><i class="fas fa-hashtag"></i> Job ID</label>
+                    <input type="text" id="formJobId" class="input-control" readonly required>
+                </div>
+                <div class="field-block">
+                    <label><i class="fas fa-fingerprint"></i> User Token Key</label>
+                    <input type="text" id="formUserId" class="input-control" readonly required>
+                </div>
+            </div>
+
+            <div class="input-group-row">
+                <div class="field-block">
+                    <label><i class="fas fa-user"></i> Applicant Profile Name</label>
+                    <input type="text" id="formUserName" class="input-control" readonly>
+                </div>
+                <div class="field-block">
+                    <label><i class="fas fa-envelope"></i> Communication Node</label>
+                    <input type="text" id="formUserEmail" class="input-control" readonly>
+                </div>
+            </div>
+
+            <div class="field-block">
+                <label for="formResumeLink"><i class="fas fa-link"></i> Digital Resume Link / Cloud Asset</label>
+                <input type="url" id="formResumeLink" class="input-control"
+                    placeholder="https://drive.google.com/file/d/... or GitHub url" required>
+            </div>
+
+            <div class="field-block">
+                <label for="formCoverLetter"><i class="fas fa-file-alt"></i> Brief Pitch / Cover Summary</label>
+                <textarea id="formCoverLetter" class="input-control"
+                    placeholder="Briefly state why your skills align perfectly with this Spring Boot stack architecture..."
+                    required></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" onclick="abortFormRoute()">Cancel</button>
+                <button type="submit" id="submitFormButton" class="btn-submit">
+                    <i class="fas fa-rocket"></i> Dispatch Application
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function applyToPosition(jobId) {
+
+            const selectedJob = allJobsArray.find(job =>
+                (job.jobId || job.job_id || job.id) == jobId
+            );
+
+            localStorage.setItem("selectedJob", JSON.stringify(selectedJob));
+
+            window.location.href = "FillApplication.html";
+        }
+    </script>
+</body>
+
+</html>

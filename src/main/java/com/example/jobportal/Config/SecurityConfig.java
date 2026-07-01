@@ -52,16 +52,20 @@ public class SecurityConfig {
                                 "/images/**",
                                 "/uploads/**",
                                 "/assets/**",
-                                "/User/**")
+                                "/User/**",
+                                "/Admin/**")
                         .permitAll()
 
                         // Authentication
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // Anyone can view jobs
+                        // User APIs
+                        .requestMatchers("/api/user/**")
+                        .authenticated()
+
+                        // Jobs
                         .requestMatchers(HttpMethod.GET, "/api/jobs/**").permitAll()
 
-                        // Employer & Admin
                         .requestMatchers(HttpMethod.POST, "/api/jobs/create")
                         .hasAnyRole("EMPLOYER", "ADMIN")
 
@@ -71,11 +75,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/jobs/**")
                         .hasAnyRole("EMPLOYER", "ADMIN")
 
-                        // Admin APIs
-                        .requestMatchers("/api/admin/**")
-                        .hasRole("ADMIN")
-
-                        // Company APIs
+                        // Companies
                         .requestMatchers(HttpMethod.GET, "/api/company/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/company/create")
@@ -86,7 +86,23 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.DELETE, "/api/company/**")
                         .hasAnyRole("EMPLOYER", "ADMIN")
-                        // Remaining APIs
+
+                        // Applications
+
+                        .requestMatchers(HttpMethod.POST, "/api/application/apply")
+                        .hasRole("JOB_SEEKER")
+
+                        .requestMatchers(HttpMethod.GET, "/api/application/**")
+                        .authenticated()
+
+                        .requestMatchers(HttpMethod.DELETE, "/api/application/**")
+                        .hasAnyRole("JOB_SEEKER", "ADMIN")
+
+                        // Admin
+                        .requestMatchers("/api/admin/**")
+                        .hasRole("ADMIN")
+
+                        // Everything else
                         .anyRequest().authenticated())
 
                 .authenticationProvider(authenticationProvider())

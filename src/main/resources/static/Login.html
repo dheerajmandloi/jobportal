@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — JobSphere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==================================================================
+       JobSphere — Unified Premium Multi-Role Sign In Interface
+       Theme: Midnight Navy with High-Gloss Electric Cyan & Purple Neon Glows
+    ================================================================== */
+
+        :root {
+            --bg-navy: #060913;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --border-neon: rgba(99, 102, 241, 0.2);
+            --indigo-glow: #4F46E5;
+            --indigo-bright: #6366F1;
+            --cyan-neon: #06B6D4;
+            --cyan-light: #22D3EE;
+            --pink-accent: #EC4899;
+            --text-main: #F8FAFC;
+            --text-sub: #94A3B8;
+            --text-muted: #475569;
+            --input-bg: rgba(15, 23, 42, 0.6);
+        }
+
+        /* ─── ENVIRONMENT RESET ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-navy);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            /* Custom Neon Ambient Glow Coordinates */
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(79, 70, 229, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.04) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        /* ─── DYNAMIC VIEWPORT CONTAINER ─── */
+        .auth-viewport-wrapper {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* High-Gloss Glassmorphic Authentication Card Blueprint */
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-neon);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 28px;
+            padding: 45px 40px;
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.7),
+                0 0 40px -5px rgba(79, 70, 229, 0.15);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+
+        /* ─── BRANDING MODULE STYLING ─── */
+        .login-brand-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .brand-logo-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--indigo-glow), var(--cyan-neon));
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .login-brand-header h2 {
+            font-size: 1.65rem;
+            font-weight: 800;
+            letter-spacing: -0.75px;
+            background: linear-gradient(120deg, #FFFFFF, #CBD5E1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-brand-header p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* ─── ALERT PANEL HARDENING ─── */
+        .auth-status-alert {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #FCA5A5;
+            border-radius: 14px;
+            padding: 14px 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            animation: shakeVibe 0.35s ease-in-out;
+        }
+
+        /* ─── STRUCTURAL FORM AND CONTROL LAYERS ─── */
+        #secureLoginForm {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .form-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-input-group label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.25px;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-input-group label i {
+            color: var(--cyan-light);
+            font-size: 0.8rem;
+        }
+
+        .input-field-relative {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-field-relative input {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field-relative input:focus {
+            border-color: var(--indigo-bright);
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow:
+                0 0 0 3px rgba(99, 102, 241, 0.15),
+                0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .input-field-relative input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Autofill fix overriding native browser styles */
+        .input-field-relative input:-webkit-autofill {
+            -webkit-text-fill-color: var(--text-main) !important;
+            -webkit-box-shadow: 0 0 0 30px #0F172A inset !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        /* ─── SECURITY CTAs / AUTH SIGN IN BUTTON ─── */
+        .auth-submit-action-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--indigo-glow), #3B82F6);
+            border: none;
+            border-radius: 14px;
+            color: #FFFFFF;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 18px rgba(79, 70, 229, 0.35);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 8px;
+        }
+
+        .auth-submit-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 8px 24px rgba(79, 70, 229, 0.5),
+                0 0 15px rgba(34, 211, 238, 0.2);
+            background: linear-gradient(135deg, var(--indigo-bright), #60A5FA);
+        }
+
+        .auth-submit-action-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-submit-action-btn:disabled {
+            background: var(--text-muted);
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .auth-submit-action-btn i {
+            font-size: 0.85rem;
+            transition: transform 0.2s ease;
+        }
+
+        .auth-submit-action-btn:hover i.fa-arrow-right {
+            transform: translateX(4px);
+        }
+
+        /* ─── REDIRECTIONS PLATFORM FOOTER ─── */
+        .auth-footer-meta {
+            margin-top: 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+
+        .auth-footer-meta p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        .auth-footer-meta a {
+            color: var(--cyan-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+            margin-left: 4px;
+        }
+
+        .auth-footer-meta a:hover {
+            color: var(--cyan-neon);
+            text-decoration: underline;
+        }
+
+        /* ─── DYNAMIC EXIT SECURITY INTERFACES ─── */
+        .auth-success-exit {
+            transform: scale(0.92) translateY(-30px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ─── ANIMATION SCHEMATICS ─── */
+        @keyframes shakeVibe {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-6px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(6px);
+            }
+        }
+
+        /* ─── MOBILE SCALING RESPONSIVENESS ─── */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 35px 24px;
+                border-radius: 20px;
+            }
+
+            .login-brand-header h2 {
+                font-size: 1.45rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="auth-viewport-wrapper">
+        <div class="login-card">
+
+            <div class="login-brand-header">
+                <div class="brand-logo-icon">
+                    <i class="fa fa-briefcase"></i>
+                </div>
+                <h2>Welcome Back to JobSphere</h2>
+                <p>One Secure Gateway for Candidates, Employers & System Administrators</p>
+            </div>
+
+            <div id="authAlertPanel" class="auth-status-alert" style="display: none;"></div>
+
+            <form id="secureLoginForm" onsubmit="executeUserAuthentication(event)">
+
+                <div class="form-input-group">
+                    <label for="authEmailAddress"><i class="fa fa-envelope"></i> Email Address</label>
+                    <div class="input-field-relative">
+                        <input type="email" id="authEmailAddress" autocomplete="username" placeholder="name@domain.com"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-input-group">
+                    <label for="authUserPassword"><i class="fa fa-lock"></i> Password</label>
+                    <div class="input-field-relative">
+                        <input type="password" id="authUserPassword" autocomplete="current-password"
+                            placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="loginSubmitBtn" class="auth-submit-action-btn">
+                    <span>Sign In to Environment</span> <i class="fa fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="auth-footer-meta">
+                <p>New to our ecosystem? <a href="RegistrationRole.html">Create an Account</a></p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const API_LOGIN_ENDPOINT = "http://localhost:8080/api/auth/login";
+        const STORAGE_TOKEN_KEY = "token";
+        const STORAGE_USER_KEY = "user";
+
+        // Main Controller Function for Secure Async Operations
+        async function executeUserAuthentication(event) {
+            event.preventDefault();
+
+            const emailInput = document.getElementById("authEmailAddress").value.trim();
+            const passwordInput = document.getElementById("authUserPassword").value;
+            const submitBtn = document.getElementById("loginSubmitBtn");
+            const alertPanel = document.getElementById("authAlertPanel");
+
+            // UI feedback trigger loop
+            hideAlertBox(alertPanel);
+            setButtonProcessingState(submitBtn, true);
+
+            // Preparing clean Payload matching Spring Boot LoginRequestDto structures
+            const loginCredentialsPayload = {
+                email: emailInput,
+                password: passwordInput
+            };
+
+            try {
+                const response = await fetch(API_LOGIN_ENDPOINT, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(loginCredentialsPayload)
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        throw new Error("Invalid email or password. Please verify credentials.");
+                    }
+                    throw new Error(`Authentication server rejected process with status code: ${response.status}`);
+                }
+
+                // Spring Boot is returning plain text JWT token back string
+                const jwtAccessTokenString = await response.text();
+
+                if (!jwtAccessTokenString || jwtAccessTokenString.trim() === "") {
+                    throw new Error("Server returned an empty security identifier packet.");
+                }
+
+                // Extraction layer to identify role matrix dynamically out of Base64 JWT structures
+                const detectedRole = decryptAndExtractRoleFromJwt(jwtAccessTokenString);
+
+                // Commit parameters natively into browser storage profiles
+                localStorage.setItem(STORAGE_TOKEN_KEY, jwtAccessTokenString);
+                localStorage.setItem(STORAGE_USER_KEY, JSON.stringify({
+                    email: emailInput,
+                    role: detectedRole
+                }));
+
+                // Visual clean smooth viewport exits
+                document.querySelector(".login-card").classList.add("auth-success-exit");
+
+                // Route navigation optimization depending upon parsed role identities
+                setTimeout(() => {
+
+                    if (detectedRole === "ADMIN") {
+
+                        window.location.href = "Admin/AdminHome.html";
+
+                    } else if (detectedRole === "EMPLOYER") {
+
+                        window.location.href = "Employer/EmployerHome.html";
+
+                    } else {
+
+                        window.location.href = "User/UserHome.html";
+
+                    }
+
+                }, 400);
+
+            } catch (error) {
+                console.error("Authentication Chain Interrupted:", error);
+                showAlertBox(alertPanel, error.message || "An unexpected system exception occurred during authentication.");
+                setButtonProcessingState(submitBtn, false);
+            }
+        }
+
+        // Helper: Decrypt Base64 encoded JSON Web Token parameters payload securely
+        function decryptAndExtractRoleFromJwt(token) {
+            try {
+                const tokenPayloadPart = token.split('.')[1];
+                const decodedPayloadJson = JSON.parse(atob(tokenPayloadPart));
+
+                // Spring Boot standard JWT setups maps roles via 'role', 'roles' or custom claim keys
+                // Mapping custom fallback system mechanisms matching your DB structures
+                let targetRole = decodedPayloadJson.role || decodedPayloadJson.roles || "JOB_SEEKER";
+
+                if (Array.isArray(targetRole)) targetRole = targetRole[0];
+
+                // Normalizing to match standard entity layout roles
+                targetRole = targetRole.toUpperCase();
+                if (targetRole.includes("ADMIN")) return "ADMIN";
+                if (targetRole.includes("EMPLOYER")) return "EMPLOYER";
+
+                return "JOB_SEEKER";
+            } catch (e) {
+                console.warn("Base64 JWT payload parsing bypassed. Falling back to explicit role detection based on input signatures.");
+
+                // Smart fallback verification if JWT parsing fails natively on browser side
+                const emailCheck = document.getElementById("authEmailAddress").value.toLowerCase();
+                if (emailCheck.includes("admin")) return "ADMIN";
+                if (emailCheck.includes("hr")) return "EMPLOYER";
+                return "JOB_SEEKER";
+            }
+        }
+
+        // UI Helpers
+        function setButtonProcessingState(btn, isProcessing) {
+            if (isProcessing) {
+                btn.disabled = true;
+                btn.style.pointerEvents = "none";
+                btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Verifying Authorization Signature...`;
+            } else {
+                btn.disabled = false;
+                btn.style.pointerEvents = "auto";
+                btn.innerHTML = `<span>Sign In to Environment</span> <i class="fa fa-arrow-right"></i>`;
+            }
+        }
+
+        function showAlertBox(panel, message) {
+            panel.textContent = message;
+            panel.style.display = "block";
+        }
+
+        function hideAlertBox(panel) {
+            panel.style.display = "none";
+            panel.textContent = "";
+        }
+    </script>
+</body>
+
+</html>

@@ -24,10 +24,10 @@ public class AuthService {
 
     // Constructor Injection (Best Practice)
     public AuthService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       JwtUtil jwtUtil,
-                       AuthenticationManager authenticationManager,
-                       UserDetailsService userDetailsService) {
+            PasswordEncoder passwordEncoder,
+            JwtUtil jwtUtil,
+            AuthenticationManager authenticationManager,
+            UserDetailsService userDetailsService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -58,13 +58,36 @@ public class AuthService {
 
     // FIX #2: Actual authentication + JWT token generate hoga
     public String loginUser(UserDto userDto) {
-        // Spring Security se authenticate karwao (password BCrypt check karega automatically)
+        // Spring Security se authenticate karwao (password BCrypt check karega
+        // automatically)
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
-        );
+                new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
 
         // Authentication successful - JWT token banao
         UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getEmail());
         return jwtUtil.generateToken(userDetails);
+    }
+
+    public String registerEmployer(UserDto userDto) {
+
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new RuntimeException("Email already registered: " + userDto.getEmail());
+        }
+
+        User user = new User();
+
+        user.setFullName(userDto.getFullName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setPhoneNumber(userDto.getPhoneNumber());
+
+        // 👇 Employer role
+        user.setRole(Role.EMPLOYER);
+
+        user.setActive(true);
+
+        userRepository.save(user);
+
+        return "Employer Registered Successfully";
     }
 }

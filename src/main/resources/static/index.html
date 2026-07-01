@@ -1563,8 +1563,8 @@
                     <!-- Visible only when LOGGED OUT -->
                     <li class="nav-item" id="navGuestBtns">
                         <div class="d-flex gap-2 ms-lg-3">
-                            <a href="User/UserLogin.html" class="btn-nav-login nav-link">Login</a>
-                            <a href="User/UserRegistration.html" class="btn-nav-register nav-link">Get Started →</a>
+                            <a href="Login.html" class="btn-nav-login nav-link">Login</a>
+                            <a href="RegistrationRole.html" class="btn-nav-register nav-link">Get Started →</a>
                         </div>
                     </li>
 
@@ -1593,11 +1593,12 @@
                                 <div id="seekerMenu" class="d-none">
                                     <li><a class="dropdown-item" href="dashboard.html"><i class="fa fa-th-large"></i>
                                             Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="jobs.html"><i class="fa fa-briefcase"></i> Browse
+                                    <li><a class="dropdown-item" href="Login.html"><i class="fa fa-briefcase"></i>
+                                            Browse
                                             Jobs</a></li>
                                     <li><a class="dropdown-item" href="my-applications.html"><i
                                                 class="fa fa-file-alt"></i> My Applications</a></li>
-                                    <li><a class="dropdown-item" href="saved-jobs.html"><i class="fa fa-bookmark"></i>
+                                    <li><a class="dropdown-item" href="saved-Login.html"><i class="fa fa-bookmark"></i>
                                             Saved Jobs</a></li>
                                     <li><a class="dropdown-item" href="profile.html"><i class="fa fa-user"></i>
                                             Profile</a></li>
@@ -1608,7 +1609,7 @@
                                                 class="fa fa-chart-bar"></i> Employer Dashboard</a></li>
                                     <li><a class="dropdown-item" href="create-job.html"><i
                                                 class="fa fa-plus-circle"></i> Post a Job</a></li>
-                                    <li><a class="dropdown-item" href="manage-jobs.html"><i class="fa fa-list"></i>
+                                    <li><a class="dropdown-item" href="manage-Login.html"><i class="fa fa-list"></i>
                                             Manage Jobs</a></li>
                                     <li><a class="dropdown-item" href="applicants.html"><i class="fa fa-users"></i> View
                                             Applicants</a></li>
@@ -1619,7 +1620,7 @@
                                             Admin Dashboard</a></li>
                                     <li><a class="dropdown-item" href="admin-users.html"><i class="fa fa-user-cog"></i>
                                             User Management</a></li>
-                                    <li><a class="dropdown-item" href="admin-jobs.html"><i class="fa fa-cogs"></i> Job
+                                    <li><a class="dropdown-item" href="admin-Login.html"><i class="fa fa-cogs"></i> Job
                                             Management</a></li>
                                 </div>
                                 <li>
@@ -1779,7 +1780,7 @@
                         <span class="section-eyebrow">Opportunities</span>
                         <h2 class="section-title">Featured Jobs</h2>
                     </div>
-                    <a href="jobs.html" class="btn-secondary-outline"
+                    <a href="Login.html" class="btn-secondary-outline"
                         style="margin: 0; padding: 10px 24px; font-size: 0.88rem;">
                         View All Jobs <i class="fa fa-arrow-right ms-2"></i>
                     </a>
@@ -1793,7 +1794,7 @@
                         <i class="fa fa-lock fa-2x mb-3" style="color: var(--indigo-light);"></i>
                         <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 16px;">Login to apply
                             for jobs and see full job details.</p>
-                        <a href="User/UserLogin.html" class="btn-primary-glow"
+                        <a href="Login.html" class="btn-primary-glow"
                             style="padding: 10px 28px; font-size: 0.9rem;">Login to Apply</a>
                     </div>
                 </div>
@@ -1871,9 +1872,9 @@
                     <h5>For Job Seekers</h5>
                     <ul>
                         <li><a href="#featuredJobs">Browse Jobs</a></li>
-                        <li><a href="User/UserLogin.html">Dashboard</a></li>
-                        <li><a href="User/UserLogin.html">My Applications</a></li>
-                        <li><a href="User/UserLogin.html">Saved Jobs</a></li>
+                        <li><a href="Login.html">Dashboard</a></li>
+                        <li><a href="Login.html">My Applications</a></li>
+                        <li><a href="Login.html">Saved Jobs</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-6 col-lg-2">
@@ -2055,7 +2056,7 @@
             <div class="job-logo-box">${job.logo}</div>
             <span class="job-type-badge ${job.typeClass}">${job.type}</span>
           </div>
-          <a class="job-title" href="${loggedIn ? 'job-details.html?id=' + job.id : 'User/UserLogin.html'}">${job.title}</a>
+          <a class="job-title" href="${loggedIn ? 'job-details.html?id=' + job.id : 'Login.html'}">${job.title}</a>
           <div class="job-company">${job.company}</div>
           <div class="job-meta">
             <span><i class="fa fa-map-marker-alt"></i> ${job.location}</span>
@@ -2140,12 +2141,12 @@
             e.preventDefault();
             const kw = document.getElementById('searchKeyword').value.trim();
             const loc = document.getElementById('searchLocation').value.trim();
-            window.location.href = `jobs.html?keyword=${encodeURIComponent(kw)}&location=${encodeURIComponent(loc)}`;
+            window.location.href = `Login.html?keyword=${encodeURIComponent(kw)}&location=${encodeURIComponent(loc)}`;
         });
 
         function quickSearch(term) {
             document.getElementById('searchKeyword').value = term;
-            window.location.href = `jobs.html?keyword=${encodeURIComponent(term)}`;
+            window.location.href = `Login.html?keyword=${encodeURIComponent(term)}`;
         }
 
         /* ══ TOAST ══ */

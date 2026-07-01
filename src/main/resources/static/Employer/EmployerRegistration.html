@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Registration | JobSphere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS Global Variables & Reset --- */
+        :root {
+            --bg-color: #f8fafc;
+            --navy-dark: #0f172a;
+            --navy-light: #1e293b;
+            --royal-blue: #2563eb;
+            --royal-hover: #1d4ed8;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --card-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+            --error-color: #ef4444;
+            --success-color: #22c55e;
+            --radius: 14px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.03) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- Navbar Styles --- */
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.25rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .nav-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .btn-login {
+            color: var(--royal-blue);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.6rem 1.25rem;
+            border: 1.5px solid var(--royal-blue);
+            border-radius: 8px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .btn-login:hover {
+            background: var(--royal-blue);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        /* --- Main Layout Container --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 1.5rem;
+        }
+
+        /* --- Registration Card Layout --- */
+        .reg-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            width: 100%;
+            max-width: 580px;
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            animation: cardFadeIn 0.6s ease-out;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .icon-wrapper {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--royal-blue), var(--navy-light));
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 1.25rem auto;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .card-header h1 {
+            color: var(--navy-dark);
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- Interactive Forms & Inputs --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--navy-light);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i.input-icon {
+            position: absolute;
+            left: 1rem;
+            color: var(--text-muted);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            outline: none;
+            background: #ffffff;
+            color: var(--navy-dark);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--royal-blue);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-wrapper input:focus+i.input-icon {
+            color: var(--royal-blue);
+        }
+
+        /* Password Field Toggle Eye Button */
+        .eye-toggle {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .eye-toggle:hover {
+            color: var(--navy-dark);
+        }
+
+        /* Error Text States Under Inputs */
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 0.4rem;
+            display: none;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Terms and Conditions Checkbox Styles */
+        .terms-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .terms-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1.5px solid #e2e8f0;
+            accent-color: var(--royal-blue);
+            cursor: pointer;
+            margin-top: 0.1rem;
+        }
+
+        .terms-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .terms-text a {
+            color: var(--royal-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Action Button --- */
+        .btn-register {
+            width: 100%;
+            background: linear-gradient(135deg, var(--royal-blue), #1d4ed8);
+            color: #ffffff;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-register:disabled {
+            background: #cbd5e1;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* --- Form Processing Spinners --- */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* --- Feedback Toast Notifications --- */
+        .toast-container {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .toast {
+            background: #ffffff;
+            color: var(--navy-dark);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-left: 5px solid transparent;
+            min-width: 300px;
+            max-width: 450px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left-color: var(--success-color);
+        }
+
+        .toast.success i {
+            color: var(--success-color);
+            animation: scaleCheck 0.4s ease-in-out alternate;
+        }
+
+        .toast.error {
+            border-left-color: var(--error-color);
+        }
+
+        .toast.error i {
+            color: var(--error-color);
+        }
+
+        @keyframes scaleCheck {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* --- Footer Styles --- */
+        footer {
+            background: var(--navy-dark);
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            margin-top: auto;
+            border-top: 1px solid var(--navy-light);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+        }
+
+        footer span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Responsive Viewports --- */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 4%;
+            }
+
+            .reg-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .toast-container {
+                top: auto;
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+            }
+
+            .toast {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo">💼 JobSphere</a>
+        <div class="nav-right">
+            <span class="nav-text">Already have an account?</span>
+            <a href="../Login.html" class="btn-login">Login</a>
+        </div>
+    </nav>
+
+    <main class="main-container">
+        <div class="reg-card">
+            <div class="card-header">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <h1>Employer Registration</h1>
+                <p>Expand your team with elite talent pools worldwide</p>
+            </div>
+
+            <form id="registrationForm" onsubmit="handleRegistration(event)" novalidate>
+                <div class="form-grid">
+
+                    <div class="input-group">
+                        <label for="companyName"><i class="fa-regular fa-user"></i> Company / Employer Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="companyName" placeholder="e.g. Acme Corporation" required>
+                            <i class="fa-solid fa-briefcase input-icon"></i>
+                        </div>
+                        <div class="error-message" id="nameError">
+                            <i class="fa-solid fa-circle-exclaim"></i> Please enter your company or corporate structural
+                            name.
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email"><i class="fa-regular fa-envelope"></i> Business Email Address</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" placeholder="hr@company.com" required>
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                        </div>
+                        <div class="error-message" id="emailError">
+                            <i class="fa-solid fa-circle-exclaim"></i> Please match format rules: name@domain.com
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="phone"><i class="fa-solid fa-phone"></i> Phone Number</label>
+                        <div class="input-wrapper">
+                            <input type="tel" id="phone" placeholder="e.g. +1234567890" required>
+                            <i class="fa-solid fa-phone input-icon"></i>
+                        </div>
+                        <div class="error-message" id="phoneError">
+                            <i class="fa-solid fa-circle-exclaim"></i> Provide a secure local or international telephone
+                            format.
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password"><i class="fa-solid fa-lock"></i> Account Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" placeholder="At least 6 characters" required>
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <button type="button" class="eye-toggle" onclick="togglePassword('password', this)">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="passwordError">
+                            <i class="fa-solid fa-circle-exclaim"></i> Securing your space requires at least 6
+                            characters.
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="confirmPassword"><i class="fa-solid fa-shield-halved"></i> Confirm Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="confirmPassword" placeholder="Re-type your choice" required>
+                            <i class="fa-solid fa-shield-halved input-icon"></i>
+                            <button type="button" class="eye-toggle" onclick="togglePassword('confirmPassword', this)">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="confirmPasswordError">
+                            <i class="fa-solid fa-circle-exclaim"></i> Configuration parameters do not match your
+                            original password input.
+                        </div>
+                    </div>
+
+                    <label class="terms-container">
+                        <input type="checkbox" id="termsCheck" required>
+                        <span class="terms-text">
+                            I accept and explicitly agree to the structural terms outlined in JobSphere's
+                            <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.
+                        </span>
+                    </label>
+                    <div class="error-message" id="termsError" style="margin-top: -0.5rem;">
+                        <i class="fa-solid fa-circle-exclaim"></i> Authorization requires compliance confirmation
+                        checkbox validation.
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="btn-register">
+                        <span id="btnText">Register Employer</span>
+                        <div class="spinner" id="btnSpinner"></div>
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <footer>
+        <p>&copy; 2026 JobSphere. Connecting Talent with Opportunity.</p>
+        <span>Secure Business Registration Workspace Enterprise Dashboard V3.0</span>
+    </footer>
+
+    <script>
+        // Toggle dynamic rendering transparency for password elements
+        function togglePassword(inputId, toggleButton) {
+            const inputField = document.getElementById(inputId);
+            const icon = toggleButton.querySelector('i');
+
+            if (inputField.type === "password") {
+                inputField.type = "text";
+                icon.classList.replace('fa-regular', 'fa-solid');
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                inputField.type = "password";
+                icon.classList.replace('fa-solid', 'fa-regular');
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Custom UI runtime configuration context triggers for system Notifications
+        function displaySystemNotification(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const iconType = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
+            toast.innerHTML = `
+                <i class="fa-solid ${iconType}" style="font-size: 1.25rem;"></i>
+                <div style="font-weight: 500; font-size: 0.95rem;">${message}</div>
+            `;
+
+            container.appendChild(toast);
+
+            // Queue animation frames sequentially
+            setTimeout(() => toast.classList.add('show'), 50);
+
+            // Cleanup elements inside interface execution structures automatically
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
+
+        // Deep Field Form Data Inspection Framework Validation Routine
+        function performFormValidation() {
+            let isValid = true;
+
+            // Elements
+            const name = document.getElementById('companyName');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const terms = document.getElementById('termsCheck');
+
+            // Reset UI Error Layout Visibility
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('input').forEach(el => el.style.borderColor = '#e2e8f0');
+
+            // Company Name Check
+            if (!name.value.trim()) {
+                document.getElementById('nameError').style.display = 'flex';
+                name.style.borderColor = 'var(--error-color)';
+                isValid = false;
+            }
+
+            // Email Pattern Match Check
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value.trim())) {
+                document.getElementById('emailError').style.display = 'flex';
+                email.style.borderColor = 'var(--error-color)';
+                isValid = false;
+            }
+
+            // Phone Number Check
+            const phoneRegex = /^\+?[0-9\s\-()]{7,15}$/;
+            if (!phoneRegex.test(phone.value.trim())) {
+                document.getElementById('phoneError').style.display = 'flex';
+                phone.style.borderColor = 'var(--error-color)';
+                isValid = false;
+            }
+
+            // Password Rule Check
+            if (password.value.length < 6) {
+                document.getElementById('passwordError').style.display = 'flex';
+                password.style.borderColor = 'var(--error-color)';
+                isValid = false;
+            }
+
+            // Password Confirmed Sync Check
+            if (password.value !== confirmPassword.value || !confirmPassword.value) {
+                document.getElementById('confirmPasswordError').style.display = 'flex';
+                confirmPassword.style.borderColor = 'var(--error-color)';
+                isValid = false;
+            }
+
+            // Checkbox Agreement Check
+            if (!terms.checked) {
+                document.getElementById('termsError').style.display = 'flex';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Form Submit Handler Context Interceptor Execution Logic
+        async function handleRegistration(event) {
+            event.preventDefault();
+
+            // Run standard checks
+            if (!performFormValidation()) return;
+
+            // Interface Control Targets
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('btnSpinner');
+
+            // Set loading state
+            submitBtn.disabled = true;
+            btnText.textContent = "Processing System Data...";
+            spinner.style.display = "block";
+
+            // Prepare Request Payload mapping schema fields
+            const payload = {
+                fullName: document.getElementById('companyName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phoneNumber: document.getElementById('phone').value.trim(),
+                password: document.getElementById('password').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/api/auth/register/employer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    displaySystemNotification('Employer account registered successfully! Redirecting...', 'success');
+
+                    // Route to login screen 
+                    setTimeout(() => {
+                        window.location.href = '../Login.html';
+                    }, 1500);
+                } else {
+                    // Extract business logic errors safely 
+                    const responseText = await response.text();
+
+                    if (responseText.toLowerCase().includes("email already registered") || responseText.toLowerCase().includes("already exists")) {
+                        displaySystemNotification('This email is already registered.', 'error');
+                    } else {
+                        displaySystemNotification(responseText || 'Server registration exception encountered.', 'error');
+                    }
+
+                    resetLoadingState();
+                }
+            } catch (networkError) {
+                console.error("Networking interface connection state lost: ", networkError);
+                displaySystemNotification('Unable to contact JobSphere Core API Server. Check back soon.', 'error');
+                resetLoadingState();
+            }
+
+            function resetLoadingState() {
+                submitBtn.disabled = false;
+                btnText.textContent = "Register Employer";
+                spinner.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>

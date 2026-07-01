@@ -667,7 +667,7 @@
             const userRaw = localStorage.getItem(STORAGE_USER_KEY);
 
             if (!token || !userRaw) {
-                window.location.href = "UserLogin.html";
+                window.location.href = "Login.html";
                 return;
             }
 
@@ -837,7 +837,7 @@
         function logoutUser() {
             localStorage.removeItem(STORAGE_TOKEN_KEY);
             localStorage.removeItem(STORAGE_USER_KEY);
-            window.location.href = "UserLogin.html";
+            window.location.href = "../index.html";
         }
     </script>
 </body>

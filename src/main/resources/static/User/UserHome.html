@@ -456,10 +456,12 @@
         <nav>
             <div id="seekerMenu" style="display:none;">
                 <h3>Job Hunting</h3>
-                <a href="#" class="nav-link active"><i class="fa fa-chart-pie"></i> Dashboard</a>
+                <a href="UserHome.html" class="nav-link active"><i class="fa fa-chart-pie"></i> Dashboard</a>
                 <a href="UserJob.html" class="nav-link"><i class="fa fa-briefcase"></i> Browse Jobs</a>
-                <a href="applications.html" class="nav-link"><i class="fa fa-paper-plane"></i> My Applications</a>
+                <a href="UserCompanies.html" class="nav-link "><i class="fa fa-building"></i> Companies</a>
+                <a href="UserApplication.html" class="nav-link"><i class="fa fa-paper-plane"></i> My Applications</a>
                 <a href="UserProfile.html" class="nav-link"><i class="fa fa-user"></i> My Profile</a>
+            </div>
             </div>
 
             <div id="employerMenu" style="display:none;">
@@ -518,7 +520,7 @@
     </main>
 
     <script>
-        // UserLogin.html ke standard keys ke sath matching constants
+        // Login.html ke standard keys ke sath matching constants
         const STORAGE_TOKEN_KEY = "token";
         const STORAGE_USER_KEY = "user";
 
@@ -570,7 +572,7 @@
             // Auth Check Interceptor: Agar data nahi hai to login pe wapas bhejo
             if (!token || !userRaw) {
                 console.warn("Unauthorized access. Redirecting to login window.");
-                window.location.href = "UserLogin.html";
+                window.location.href = "Login.html";
                 return;
             }
 
@@ -647,7 +649,7 @@
             localStorage.removeItem(STORAGE_TOKEN_KEY);
             localStorage.removeItem(STORAGE_USER_KEY);
             alert("Securely logging out from JobSphere system.");
-            window.location.href = "UserLogin.html";
+            window.location.href = "../index.html";
         }
     </script>
 </body>

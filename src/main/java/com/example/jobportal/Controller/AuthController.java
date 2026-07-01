@@ -22,7 +22,8 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // FIX #5: @Valid lagaya - ab LoginRequestDto ke @NotBlank/@Email annotations kaam karenge
+    // FIX #5: @Valid lagaya - ab LoginRequestDto ke @NotBlank/@Email annotations
+    // kaam karenge
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@Valid @RequestBody LoginRequestDto loginRequest) {
         UserDto userDto = new UserDto();
@@ -33,11 +34,16 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 
-    // FIX #6: @Valid lagaya - registration mein bhi validation fire hogi
-  @PostMapping("/register")
-public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
 
-    authService.registerUser(userDto);
-    return ResponseEntity.ok("User Registered Successfully");
-}
+        authService.registerUser(userDto);
+        return ResponseEntity.ok("User Registered Successfully");
+    }
+
+    @PostMapping("/register/employer")
+    public ResponseEntity<String> registerEmployer(@RequestBody UserDto userDto) {
+
+        return ResponseEntity.ok(authService.registerEmployer(userDto));
+    }
 }

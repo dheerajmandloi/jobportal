@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Role — JobSphere</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-navy: #0A0F1E;
+            --sidebar-bg: rgba(10, 15, 30, 0.9);
+            --card-bg: #111827;
+            --border-color: #1E2A42;
+            --indigo-main: #4F46E5;
+            --indigo-light: #6366F1;
+            --cyan-main: #06B6D4;
+            --cyan-light: #22D3EE;
+            --pink-alert: #EC4899;
+            --green-success: #10B981;
+            --text-main: #F1F5F9;
+            --text-sub: #94A3B8;
+            --text-muted: #64748B;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            background-color: var(--bg-navy);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- Premium Cyberpunk Background & Ambient Glows --- */
+        .bg-glow-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.12) 0%, transparent 50%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.7;
+        }
+
+        /* --- Top Navigation Bar --- */
+        .top-nav {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: rgba(10, 15, 30, 0.6);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--indigo-main), var(--cyan-main));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .logo-text strong {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: block;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text .sub-tag {
+            font-size: 0.75rem;
+            color: var(--cyan-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .back-link {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link:hover {
+            color: var(--text-main);
+        }
+
+        /* --- Main Portal Container --- */
+        .portal-container {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 24px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portal-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .portal-header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        .portal-header em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--indigo-light), var(--cyan-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .portal-header p {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- Dark Glassmorphic Roles Grid --- */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 40px;
+        }
+
+        .role-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Subtle inner card content padding setup */
+        .card-content {
+            padding: 45px 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Neon Gradient Border Hover Effect */
+        .role-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: transparent;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: background 0.4s ease;
+        }
+
+        .role-card.seeker:hover::before {
+            background: linear-gradient(135deg, var(--indigo-main), transparent);
+        }
+
+        .role-card.employer:hover::before {
+            background: linear-gradient(135deg, var(--cyan-main), transparent);
+        }
+
+        /* Hover Ambient Card Glows */
+        .role-glow {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+            filter: blur(60px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .role-card.seeker .role-glow {
+            background: var(--indigo-main);
+        }
+
+        .role-card.employer .role-glow {
+            background: var(--cyan-main);
+        }
+
+        .role-card:hover .role-glow {
+            opacity: 0.3;
+        }
+
+        .role-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(17, 24, 39, 0.85);
+        }
+
+        /* Role Icons Styling */
+        .role-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(30, 42, 66, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .role-card.seeker:hover .role-icon {
+            background: var(--indigo-main);
+            color: var(--text-main);
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
+            border-color: var(--indigo-light);
+        }
+
+        .role-card.employer:hover .role-icon {
+            background: var(--cyan-main);
+            color: var(--bg-navy);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            border-color: var(--cyan-light);
+        }
+
+        .role-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .role-card p {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        /* Interactive CTA Tags */
+        .action-tag {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: gap 0.3s ease;
+        }
+
+        .role-card.seeker .action-tag {
+            color: var(--indigo-light);
+        }
+
+        .role-card.employer .action-tag {
+            color: var(--cyan-light);
+        }
+
+        .role-card:hover .action-tag {
+            gap: 14px;
+        }
+
+        /* --- Footer Navigation Redirection --- */
+        .portal-footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .matrix-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 6px;
+            transition: color 0.3s ease;
+            border-bottom: 1px dashed var(--cyan-main);
+            padding-bottom: 2px;
+        }
+
+        .matrix-link i {
+            font-size: 0.85rem;
+            margin-left: 4px;
+            color: var(--cyan-light);
+        }
+
+        .matrix-link:hover {
+            color: var(--cyan-light);
+        }
+
+        /* --- Responsive Layout & Sidebar Adaptive Breakdown --- */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 15px 24px;
+            }
+
+            .roles-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                max-width: 450px;
+            }
+
+            .card-content {
+                padding: 35px 30px;
+            }
+
+            .portal-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="bg-glow-layer"></div>
+    <div class="grid-overlay"></div>
+
+    <nav class="top-nav">
+        <a href="index.html" class="brand-logo">
+            <span class="logo-icon"><i class="fas fa-briefcase"></i></span>
+            <div class="logo-text">
+                <strong>JobSphere</strong>
+                <span class="sub-tag">Cyber Ecosystem</span>
+            </div>
+        </a>
+        <div class="nav-actions">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </nav>
+
+    <main class="portal-container">
+        <header class="portal-header">
+            <h1>Join the <em>Ecosystem</em></h1>
+            <p>Select your operational profile to configure your personalized dashboard, access smart recruitment
+                pipelines, or track career metrics.</p>
+        </header>
+
+        <div class="roles-grid">
+
+            <div class="role-card seeker" data-role="JOB_SEEKER"
+                onclick="selectRole('JOB_SEEKER', 'User/UserRegistration.html')">
+                <div class="role-glow"></div>
+                <div class="card-content">
+                    <div class="role-icon">
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                    <h3>Job Seeker</h3>
+                    <p>Build your professional terminal, discover high-growth tech positions, track application
+                        pipelines, and unlock dynamic skill badges.</p>
+                    <div class="action-tag">
+                        <span>Initialize Profile</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="role-card employer" data-role="EMPLOYER"
+                onclick="selectRole('EMPLOYER', 'Employer/EmployerRegistration.html')">
+                <div class="role-glow"></div>
+                <div class="card-content">
+                    <div class="role-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Employer Portal</h3>
+                    <p>Deploy talent pipelines, manage company profiles, evaluate candidate metrics, and orchestrate
+                        modern developer recruitment cycles.</p>
+                    <div class="action-tag">
+                        <span>Deploy Workspace</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="portal-footer">
+            <p>Already integrated into the matrix? <a href="Login.html" class="matrix-link">Access Login Portal <i
+                        class="fas fa-sign-in-alt"></i></a></p>
+        </footer>
+    </main>
+
+    <script>
+        /**
+         * Directs user to the specific registration form and saves temporary state.
+         * @param {string} roleType - The selected system authority level (JOB_SEEKER / EMPLOYER)
+         * @param {string} targetUrl - The relative page path for the next form step
+         */
+        function selectRole(roleType, targetUrl) {
+            // Visual tap/click micro-interaction feedback before redirecting
+            const selectedCard = document.querySelector(`.role-card[data-role="${roleType}"]`);
+            if (selectedCard) {
+                selectedCard.style.transform = "scale(0.96) translateY(2px)";
+                selectedCard.style.opacity = "0.85";
+                selectedCard.style.transition = "all 0.15s ease";
+            }
+
+            // Storing intent in session context (useful for the actual registration API payloads later)
+            localStorage.setItem("selected_registration_role", roleType);
+
+            // Smooth route execution simulation
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 200);
+        }
+
+        // Check if user is already logged in (Valid dynamic Bearer Token in Storage)
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("bearer_token");
+            const userData = localStorage.getItem("user");
+
+            if (token && userData) {
+                try {
+                    const parsedUser = JSON.parse(userData);
+                    // Redirect directly to context dashboard if session is alive
+                    if (parsedUser.role) {
+                        window.location.href = "dashboard.html";
+                    }
+                } catch (e) {
+                    console.error("Session configuration corrupted, initializing login space clean up.");
+                    localStorage.clear();
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
