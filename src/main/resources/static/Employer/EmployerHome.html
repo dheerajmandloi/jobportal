@@ -542,11 +542,30 @@
         <nav>
             <div id="employerMenu">
                 <h3>Recruitment Control</h3>
-                <a href="#" class="nav-link active"><i class="fa fa-chart-pie"></i> Control Center</a>
-                <a href="create-job.html" class="nav-link"><i class="fa fa-plus-circle"></i> Post a Position</a>
-                <a href="manage-jobs.html" class="nav-link"><i class="fa fa-tasks"></i> Active Listings</a>
-                <a href="applicants.html" class="nav-link"><i class="fa fa-users"></i> Candidate Pools</a>
-                <a href="interviews.html" class="nav-link"><i class="fa fa-calendar-alt"></i> Interview Lineup</a>
+                <a href="#" class="nav-link active">
+                    <i class="fa fa-chart-pie"></i> Control Center
+                </a>
+
+                <a href="PostJobs.html" class="nav-link">
+                    <i class="fa fa-plus-circle"></i> Post a Position
+                </a>
+
+                <a href="ViewpPostJobs.html" class="nav-link">
+                    <i class="fa fa-tasks"></i> Active Listings
+                </a>
+
+                <!-- New Applications Menu -->
+                <a href="ViewApplications.html" class="nav-link">
+                    <i class="fa fa-file-alt"></i> Applications
+                </a>
+
+                <a href="applicants.html" class="nav-link">
+                    <i class="fa fa-users"></i> Candidate Pools
+                </a>
+
+                <a href="interviews.html" class="nav-link">
+                    <i class="fa fa-calendar-alt"></i> Interview Lineup
+                </a>
             </div>
 
             <div class="account-menu">
@@ -624,7 +643,7 @@
                 { value: "94%", label: "Placement Rate", icon: "fa-chart-line" }
             ],
             actions: [
-                { text: "Deploy New Job", url: "create-job.html", icon: "fa-plus-circle" },
+                { text: "Deploy New Job", url: "PostJobs.html", icon: "fa-plus-circle" },
                 { text: "Evaluate Applicants", url: "manage-jobs.html", icon: "fa-user-check" },
                 { text: "Sync Interviewer Calendar", url: "interviews.html", icon: "fa-calendar-alt" }
             ],

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a New Position — Recruiter Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==================================================================
+       JobSphere HR Module — Glassmorphic Create Job Layout
+       Theme: Midnight Cyber Navy with Electric Cyan & Indigo Accents
+    ================================================================== */
+        :root {
+            --bg-navy: #060a12;
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-focus: #6366f1;
+            --indigo-main: #4f46e5;
+            --indigo-light: #6366f1;
+            --cyan-main: #06b6d4;
+            --cyan-light: #22d3ee;
+            --pink-alert: #ec4899;
+            --green-success: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-blur: blur(16px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at 0% 0%, #0f172a 0%, #060a12 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Background Decorative Mesh Glow */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+            top: -150px;
+            right: -50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Form Glass Container Frame */
+        .glass-form-container {
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 850px;
+            /* Wider footprint for multi-column inputs structural grid */
+            padding: 45px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
+            animation: formEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes formEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Head Elements */
+        .form-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .form-header .panel-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--cyan-light);
+            margin-bottom: 16px;
+        }
+
+        .form-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 60%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        /* Two-Column Balanced Structural Grid Matrix Layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 24px;
+            row-gap: 20px;
+        }
+
+        /* Span across full matrix row space when flagged */
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .field-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field-block label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .field-block label i {
+            color: var(--indigo-light);
+            font-size: 0.9rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        /* Customized Input Field Wrappers matching Core Theme */
+        .input-control {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 13px 16px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-control:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        select.input-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        select.input-control option {
+            background: #0f172a;
+            color: var(--text-main);
+        }
+
+        textarea.input-control {
+            min-height: 110px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .input-control::placeholder {
+            color: rgba(148, 163, 184, 0.4);
+        }
+
+        /* Inline Input Suffix / Prefix Adjustments for Metrics Formats */
+        .input-wrapper-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper-inner .currency-tag {
+            position: absolute;
+            left: 16px;
+            color: rgba(148, 163, 184, 0.6);
+            font-size: 0.95rem;
+            font-weight: 500;
+            pointer-events: none;
+        }
+
+        .input-wrapper-inner .currency-input {
+            padding-left: 54px;
+        }
+
+        /* Form Submissions Action Footer Controls Layout */
+        .form-actions {
+            margin-top: 40px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 28px;
+        }
+
+        .btn-action-primary,
+        .btn-action-secondary {
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            outline: none;
+        }
+
+        .btn-action-primary {
+            background: linear-gradient(135deg, var(--indigo-main) 0%, #3b82f6 100%);
+            border: none;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-action-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+            filter: brightness(1.1);
+        }
+
+        .btn-action-primary:disabled {
+            background: #1e293b;
+            color: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-action-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: #e2e8f0;
+        }
+
+        .btn-action-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Shared Global Notification System Banner */
+        [id="toastNotification"] {
+            display: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            animation: alertDrop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes alertDrop {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-error {
+            background: rgba(244, 63, 94, 0.12);
+            border: 1px solid rgba(244, 63, 94, 0.25);
+            color: #fda4af;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #a7f3d0;
+        }
+
+        /* Responsive View Adaptability Controls Layout Mapping */
+        @media(max-width: 768px) {
+            .glass-form-container {
+                padding: 28px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: span 1;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .btn-action-primary,
+            .btn-action-secondary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glass-form-container">
+        <div class="form-header">
+            <div class="panel-badge"><i class="fas fa-briefcase"></i> Recruitment Gateway Module</div>
+            <h1>Post a New Position</h1>
+            <p>Populate core organizational variables below to route asset metrics to global listings.</p>
+        </div>
+
+        <!-- Global Interactive Operational Notifications Framework -->
+        <div id="toastNotification"></div>
+
+        <form id="createJobForm" onsubmit="handleJobCreationPipeline(event)">
+            <div class="form-grid">
+
+                <!-- Job Title Input Field -->
+                <div class="field-block">
+                    <label for="jobTitle"><i class="fas fa-id-badge"></i> Job Title / Designation</label>
+                    <input type="text" id="jobTitle" class="input-control"
+                        placeholder="e.g. Senior Java Full Stack Developer" required>
+                </div>
+
+                <!-- Company Name Input Field -->
+                <div class="field-block">
+                    <label for="companyName"><i class="fas fa-building"></i> Hiring Entity / Company</label>
+                    <input type="text" id="companyName" class="input-control" placeholder="e.g. Zoho Corporation"
+                        required>
+                </div>
+
+                <!-- Geographic Location input parameters -->
+                <div class="field-block">
+                    <label for="location"><i class="fas fa-map-marker-alt"></i> Geographic Location</label>
+                    <input type="text" id="location" class="input-control" placeholder="e.g. Indore, Bangalore, Remote"
+                        required>
+                </div>
+
+                <!-- Employment Classification parameters Mapping -->
+                <div class="field-block">
+                    <label for="jobType"><i class="fas fa-business-time"></i> Employment Type</label>
+                    <select id="jobType" class="input-control" required>
+                        <option value="" disabled selected>Select configuration variant...</option>
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Contract">Contract</option>
+                    </select>
+                </div>
+
+                <!-- Level of experience matching targets parameter -->
+                <div class="field-block">
+                    <label for="experienceLevel"><i class="fas fa-graduation-cap"></i> Experience Bracket</label>
+                    <input type="text" id="experienceLevel" class="input-control"
+                        placeholder="e.g. Fresher, 1-3 Years, Senior" required>
+                </div>
+
+                <!-- Financial Package Value mapped matching DTO schema validation -->
+                <div class="field-block">
+                    <label for="salary"><i class="fas fa-money-bill-wave"></i> Annual Base Salary (INR)</label>
+                    <div class="input-wrapper-inner">
+                        <span class="currency-tag">₹</span>
+                        <input type="number" id="salary" class="input-control currency-input" placeholder="e.g. 850000"
+                            min="0" step="any" required>
+                    </div>
+                </div>
+
+                <!-- Technical Skills required vector items -->
+                <div class="field-block full-width">
+                    <label for="skills"><i class="fas fa-code"></i> Target Core Skills (Comma Separated)</label>
+                    <input type="text" id="skills" class="input-control"
+                        placeholder="e.g. Java, Spring Boot, React, MySQL" required>
+                </div>
+
+                <!-- Static application deadline vector mapping parameter input fields -->
+                <div class="field-block full-width">
+                    <label for="applicationDeadline"><i class="fas fa-calendar-alt"></i> Application Deadline Target
+                        Date</label>
+                    <input type="datetime-local" id="applicationDeadline" class="input-control" required>
+                </div>
+
+                <!-- Textual Description Text blocks configuration mapping parameters -->
+                <div class="field-block full-width">
+                    <label for="description"><i class="fas fa-align-left"></i> Comprehensive Job Description</label>
+                    <textarea id="description" class="input-control"
+                        placeholder="Detail standard operational assignments, team hierarchy scopes, and day-to-day workflow milestones here..."
+                        required></textarea>
+                </div>
+
+                <!-- Contextual Core Requirements text configuration variables blocks -->
+                <div class="field-block full-width">
+                    <label for="requirements"><i class="fas fa-list-check"></i> Additional Hiring Requirements /
+                        Prerequisites</label>
+                    <textarea id="requirements" class="input-control"
+                        placeholder="Specify explicit tech stack alignment prerequisites, educational background benchmarks, or immediate certification vectors..."></textarea>
+                </div>
+
+            </div>
+
+            <!-- Operational Interactive Management Submission panel controls execution elements -->
+            <div class="form-actions">
+                <button type="button" class="btn-action-secondary" onclick="abortWorkflowStream()">Cancel Asset</button>
+                <button type="submit" id="submitBtnNode" class="btn-action-primary">
+                    <i class="fas fa-cloud-upload-alt"></i> Commit & Publish Position
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const STORAGE_TOKEN_KEY = "token";
+        const API_JOB_CREATE_ENDPOINT = "http://localhost:8080/api/jobs/create";
+
+        // Intercept page mount workflows to verify structural security credentials authorization roles
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem(STORAGE_TOKEN_KEY);
+            if (!token) {
+                alert("Authorization token missing. Relocating context path to secure terminal gate.");
+                window.location.href = "Login.html";
+                return;
+            }
+
+            // Auto-fill an application deadline structure baseline safely matching local timezone variables
+            const currentDatetimePicker = document.getElementById("applicationDeadline");
+            if (currentDatetimePicker) {
+                const targetFutureOffsetDate = new Date();
+                targetFutureOffsetDate.setDate(targetFutureOffsetDate.getDate() + 30); // Default to a standard 30 days bracket duration
+
+                const isoStringFormatted = targetFutureOffsetDate.toISOString();
+                currentDatetimePicker.value = isoStringFormatted.substring(0, 16);
+            }
+        });
+
+        /**
+         * Orchestrates formal transactional pipeline data marshalling for backend injection
+         */
+        async function handleJobCreationPipeline(event) {
+            event.preventDefault();
+
+            const token = localStorage.getItem(STORAGE_TOKEN_KEY);
+            const submitButton = document.getElementById("submitBtnNode");
+
+            // Extract values safely from interactive node field descriptors mapping sequence elements
+            const jobTitleVal = document.getElementById("jobTitle").value.trim();
+            const companyNameVal = document.getElementById("companyName").value.trim();
+            const locationVal = document.getElementById("location").value.trim();
+            const jobTypeVal = document.getElementById("jobType").value;
+            const experienceLevelVal = document.getElementById("experienceLevel").value.trim();
+            const salaryVal = parseFloat(document.getElementById("salary").value);
+            const skillsVal = document.getElementById("skills").value.trim();
+            const deadlineVal = document.getElementById("applicationDeadline").value;
+            const descriptionVal = document.getElementById("description").value.trim();
+            const requirementsVal = document.getElementById("requirements").value.trim();
+
+            // Perform strict transactional validations matching standard constraints architecture parameters
+            if (!jobTitleVal || !companyNameVal || !locationVal || !jobTypeVal || !salaryVal || !skillsVal || !deadlineVal || !descriptionVal) {
+                renderAlertNotification("Structural data parsing validation failure. Ensure required variables parameters are populated.", "error");
+                return;
+            }
+
+            // Lock submission interceptors array nodes to handle double triggers cleanly
+            const activeStateBackupHtml = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Persisting Metrics Node...`;
+
+            // Transform user date selections into an ISO standard LocalDateTime format required by Spring Boot jackson engine arrays[cite: 14]
+            let formattedIsoDeadline = null;
+            try {
+                if (deadlineVal) {
+                    // Append matching time coordinates syntax to maintain valid parsing structure matrices
+                    formattedIsoDeadline = new Date(deadlineVal).toISOString().split('.')[0];
+                }
+            } catch (dateTimeErr) {
+                console.error("Failed to reformat timestamp matrix indices:", dateTimeErr);
+                renderAlertNotification("Invalid timeframe coordinate parameters specified.", "error");
+                submitButton.disabled = false;
+                submitButton.innerHTML = activeStateBackupHtml;
+                return;
+            }
+
+            // Map data payload constraints matching JobDto expectations parameters layout variables perfectly[cite: 14]
+            const jobDtoPayload = {
+                jobTitle: jobTitleVal,
+                companyName: companyNameVal,
+                location: locationVal,
+                jobType: jobTypeVal,
+                experienceLevel: experienceLevelVal,
+                salary: salaryVal,
+                description: descriptionVal,
+                requirements: requirementsVal || null,
+                skills: skillsVal,
+                active: true
+            };
+
+            // Only bind data values if the format string generated translates cleanly[cite: 14]
+            if (formattedIsoDeadline) {
+                jobDtoPayload.applicationDeadline = formattedIsoDeadline;
+            }
+
+            try {
+                // Dispatch REST stream processing metrics via native Fetch interface controllers[cite: 13]
+                const response = await fetch(API_JOB_CREATE_ENDPOINT, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(jobDtoPayload)
+                });
+
+                if (response.ok) {
+                    renderAlertNotification("🚀 System Entity Persisted Successfully! Route remapping initialized...", "success");
+
+                    // Delay slightly to grant confirmation visibility to tracking metrics parameters 
+                    setTimeout(() => {
+                        window.location.href = "manage-jobs.html";
+                    }, 2000);
+
+                } else {
+                    const errorReasonMessage = await response.text();
+                    throw new Error(errorReasonMessage || "Spring Boot target route processing validation exceptions occurred.");
+                }
+
+            } catch (networkException) {
+                console.error("Job compilation exceptions intercepted:", networkException);
+                renderAlertNotification(`Transaction Refused: ${networkException.message}`, "error");
+
+                // Clear state freeze locks
+                submitButton.disabled = false;
+                submitButton.innerHTML = activeStateBackupHtml;
+            }
+        }
+
+        /**
+         * Clears workflow states to return context paths back to listing modules grids
+         */
+        function abortWorkflowStream() {
+            window.location.href = "manage-jobs.html";
+        }
+
+        /**
+         * System Toast Notification visual block status management vector logic
+         */
+        function renderAlertNotification(messageText, textTypeVariant) {
+            const staticNotificationContainer = document.getElementById("toastNotification");
+            if (!staticNotificationContainer) return;
+
+            staticNotificationContainer.style.display = "block";
+            staticNotificationContainer.textContent = messageText;
+
+            if (textTypeVariant === "success") {
+                staticNotificationContainer.className = "alert-success";
+            } else {
+                staticNotificationContainer.className = "alert-error";
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
